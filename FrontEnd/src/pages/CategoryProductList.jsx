@@ -48,34 +48,6 @@ const CategoryProductList = ({ slug: propSlug }) => {
     setVisibleProducts(4); // Reset số sản phẩm hiển thị khi thay đổi danh mục
   }, [category, maxProductPrice]);
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const response = await getBySlugCategory(slug); // Gọi API lấy category theo slug
-  //       console.log("Response from API:", response);
-  //       if (response?.category) {
-  //         setCategory(response.category);
-  //         setProducts(response.category.products); // Lấy products từ category
-  //         // Tính giá cao nhất để thiết lập khoảng giá
-  //         const maxPrice = Math.max(
-  //           ...response.category.products.map((p) => p.basePrice),
-  //           0
-  //         );
-  //         setPriceRange([0, maxPrice]); // Cập nhật khoảng giá
-  //       } else {
-  //         setError("Danh mục không tồn tại");
-  //       }
-  //     } catch (err) {
-  //       setError("Lỗi khi tải dữ liệu");
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   if (slug) fetchData();
-  // }, [slug]);
-
   useEffect(() => {
     const fetchData = async () => {
       try {

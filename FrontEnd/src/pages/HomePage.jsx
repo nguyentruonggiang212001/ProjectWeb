@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import "../css/style.css";
 import "../css/grid.css";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { fetchProducts } from "../features/products/productAction";
 import Slider from "../Components/Slider";
 import aoKhoacGiuAm from "../img/Áo khoác giữ ấm.webp";
