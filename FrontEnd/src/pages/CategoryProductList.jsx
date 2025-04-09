@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { makeSelectProductsByCategory } from "../features/products/productSlice";
 import { Link, useLocation, useParams } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Slider } from "antd";
@@ -8,8 +7,6 @@ import "../css/category.css";
 import { fetchProducts } from "../features/products/productAction";
 import productContent from "../img/cart-content.svg";
 import { getBySlugCategory } from "../services/categoryServices";
-
-// const selectProductsByCategory = makeSelectProductsByCategory();
 
 const CategoryProductList = ({ slug: propSlug }) => {
   // const { slug } = useParams(); // Lấy slug từ URL
@@ -20,14 +17,8 @@ const CategoryProductList = ({ slug: propSlug }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  // const { category: urlCategory } = useParams();
   const location = useLocation();
   const isCategoryPage = location.pathname.startsWith("/category");
-  // const category = propCategory || urlCategory;
-  // const products = useSelector((state) =>
-  //   selectProductsByCategory(state, category)
-  // );
-  // const loading = useSelector((state) => state.products?.loading || false);
   const allProducts = useSelector((state) => state.products?.products || []);
   const [visibleProducts, setVisibleProducts] = useState(4);
   const [sortOption, setSortOption] = useState("all");

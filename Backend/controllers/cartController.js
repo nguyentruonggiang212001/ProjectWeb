@@ -6,13 +6,6 @@ export const addToCart = async (req, res) => {
   try {
     const { userId, productId, variantId, quantity } = req.body;
 
-    // console.log(" Request thêm sản phẩm vào giỏ hàng:", {
-    //   userId,
-    //   productId,
-    //   variantId,
-    //   quantity,
-    // });
-
     if (!userId || !productId || quantity <= 0) {
       console.error(" Lỗi: Dữ liệu không hợp lệ!");
       return res.status(400).json({ error: "Dữ liệu không hợp lệ!" });

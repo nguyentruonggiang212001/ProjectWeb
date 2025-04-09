@@ -1,29 +1,17 @@
 import { useEffect } from "react";
 import "../css/style.css";
 import "../css/grid.css";
-import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../features/products/productAction";
-import Slider from "../Components/Slider";
-import aoKhoacGiuAm from "../img/Áo khoác giữ ấm.webp";
-import giayNu from "../img/Giày Nữ .webp";
-import quanNu from "../img/Quần nữ.webp";
-import doLotNu from "../img/Đồ Lót Nữ.webp";
-import aoChongNang from "../img/Áo chống Nắng.webp";
-import giayNam from "../img/Giày Nam.webp";
-import quanNam from "../img/Quần Nam.webp";
-import doLotNam from "../img/Quần Lót Nam.webp";
-import aoKhoacLongvu from "../img/ÁOKHOÁCPHAO&LÔNG VŨ.webp";
-import aoChongNangUV from "../img/ÁoChốngNắng.webp";
-import giayTheThao from "../img/GiayTheThao.webp";
-import jean from "../img/JEAN.webp";
 import CategoryProductList from "./CategoryProductList";
+import womanImg from "../img/womanImg.webp";
+import longVuNu from "../img/AoKhoacNu.webp";
+import jeanNam from "../img/JeanNam.webp";
 
-const HomePage = () => {
-  // const products = useSelector((state) => state.products?.products || []);
-  // const loading = useSelector((state) => state.products?.loading || false);
-  // const error = useSelector((state) => state.products?.error || null);
-  // const searchTerm = useSelector((state) => state.products?.searchTerm || "");
+const WomanPage = () => {
+  const products = useSelector((state) => state.products?.products || []);
+  const loading = useSelector((state) => state.products?.loading || false);
+  const error = useSelector((state) => state.products?.error || null);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -31,56 +19,23 @@ const HomePage = () => {
   }, []);
 
   // if (loading) return <p>Loading...</p>;
-  // if (error) return <p>{error}</p>;
+  if (error) return <p>{error}</p>;
 
   return (
     <div>
       <div className="container">
         <div className="row">
-          <div className="carousel">
-            <Slider />
-          </div>
-          <div className="product-home-name">
-            <span className="text-home-name">HÔM NAY MUA GÌ?</span>
-          </div>
-          <div className="home-content">
-            <div className="col-lg-10 col-md-12 col-sm-12 col-12">
-              <div className="home-img">
-                <Link to={`/category/ao-khoac-phao-and-long-vu`}>
-                  <img src={aoKhoacGiuAm} alt="Áo Khoác Phao & Lông Vũ" />
-                  <span>Áo Khoác Phao & Lông Vũ</span>
-                </Link>
-
-                <Link to={`/category/giay-the-thao-va-giay-chay-bo-nu`}>
-                  <img src={giayNu} alt="GIÀY THỂ THAO & GIÀY CHẠY BỘ NỮ" />
-                  <span>Giày Thể Thao Nữ</span>
-                </Link>
-                <Link to={`/category/quan-dai-va-jean-nu`}>
-                  <img src={quanNu} alt="quanNu" />
-                  <span>Quần Nữ</span>
-                </Link>
-                <Link to={`/category/do-lot-nu`}>
-                  <img src={doLotNu} alt="doLotNu" />
-                  <span>Đồ Lót Nữ</span>
-                </Link>
-                <Link to={`/category/ao-chong-nang-ngan-ngua-tia-uv`}>
-                  <img src={aoChongNang} alt="aoChongNang" />
-                  <span>Áo Chống Nắng</span>
-                </Link>
-                <Link to={`/category/giay-the-thao-va-giay-chay-nam`}>
-                  <img src={giayNam} alt="giayNam" />
-                  <span>Giày Thể Thao Nam</span>
-                </Link>
-                <Link to={`/category/quan-dai-va-jean-nam`}>
-                  <img src={quanNam} alt="quanNam" />
-                  <span>Quần Nam</span>
-                </Link>
-                <Link to={`/category/do-lot-nam`}>
-                  <img src={doLotNam} alt="doLotNam" />
-                  <span>Đồ Lót Nam</span>
-                </Link>
-              </div>
-            </div>
+          <div className="womanImg" style={{ marginTop: "100px" }}>
+            <img
+              src={womanImg}
+              alt="womanImg"
+              style={{
+                width: "100%",
+                height: "auto",
+                objectFit: "contain",
+                marginTop: "50px",
+              }}
+            />
           </div>
           <div className="code">
             <p>NHẬN CODE ÁP DỤNG ƯU ĐÃI ONLINE</p>
@@ -205,12 +160,12 @@ const HomePage = () => {
           </div>
 
           <div className="code">
-            <p>ÁO KHOÁC PHAO & LÔNG VŨ</p>
+            <p>ÁO KHOÁC PHAO & LÔNG VŨ NỮ</p>
           </div>
           <div className="jacket-img">
             <img
-              src={aoKhoacLongvu}
-              alt="aoKhoacLongvu"
+              src={longVuNu}
+              alt="longVuNu"
               style={{
                 width: "100%",
                 height: "auto",
@@ -222,18 +177,14 @@ const HomePage = () => {
           <div className="line-home-page">
             <span></span>
           </div>
-
-          <div className="home-page">
-            <CategoryProductList slug="ao-khoac-phao-and-long-vu" />
-          </div>
-
+          <CategoryProductList slug="ao-khoac-phao-va-long-vu-nu" />
           <div className="code">
-            <p>ÁO CHỐNG NẮNG NGĂN NGỪA TIA UV</p>
+            <p>QUẦN DÀI & JEAN NỮ</p>
           </div>
           <div className="sunblock jacket">
             <img
-              src={aoChongNangUV}
-              alt="aoChongNangUV"
+              src={jeanNam}
+              alt="jeanNam"
               style={{
                 width: "100%",
                 height: "auto",
@@ -246,62 +197,28 @@ const HomePage = () => {
             <span></span>
           </div>
           <div className="home-page">
-            <CategoryProductList slug="ao-chong-nang-ngan-ngua-tia-uv" />
+            <CategoryProductList slug="quan-dai-va-jean-nu" />
           </div>
 
           <div className="code">
-            <p>GIÀY THỂ THAO & GIÀY CHẠY BỘ</p>
+            <p>GIÀY THỂ THAO & GIÀY CHẠY NỮ</p>
           </div>
-          <div className="sneaker">
-            <img
-              src={giayTheThao}
-              alt="giayTheThao"
-              style={{
-                width: "100%",
-                height: "auto",
-                objectFit: "contain",
-                marginTop: "50px",
-              }}
-            />
+
+          <div className="line-home-page">
+            <span></span>
+          </div>
+          <div className="home-page">
+            <CategoryProductList slug="giay-the-thao-va-giay-chay-bo-nu" />
+          </div>
+
+          <div className="code">
+            <p>ĐỒ LÓT NỮ</p>
           </div>
           <div className="line-home-page">
             <span></span>
           </div>
           <div className="home-page">
-            <CategoryProductList slug="giay-the-thao-va-giay-chay-bo" />
-          </div>
-
-          <div className="code">
-            <p>QUẦN DÀI & JEAN</p>
-          </div>
-          <div className="jean">
-            <img
-              src={jean}
-              alt="jean"
-              style={{
-                width: "100%",
-                height: "auto",
-                objectFit: "contain",
-                marginTop: "50px",
-              }}
-            />
-          </div>
-          <div className="line-home-page">
-            <span></span>
-          </div>
-
-          <div className="home-page">
-            <CategoryProductList slug="quan-dai-and-jean" />
-          </div>
-
-          <div className="code">
-            <p>NHÀ CỬA VÀ ĐỜI SỐNG</p>
-          </div>
-          <div className="line-home-page">
-            <span></span>
-          </div>
-          <div className="home-page">
-            <CategoryProductList slug="nha-cua-va-doi-song" />
+            <CategoryProductList slug="do-lot-nu" />
           </div>
         </div>
       </div>
@@ -309,4 +226,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default WomanPage;

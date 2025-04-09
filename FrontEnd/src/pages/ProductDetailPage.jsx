@@ -681,20 +681,24 @@ const ProductDetailPage = () => {
           </div>
         </div>
       </div>
-      {/* <section className="suggested-products">
+      <section className="suggested-products">
         <div className="container">
           <h2>Sản phẩm cùng danh mục:</h2>
           <div className="row">
             {suggestedProducts.length > 0 ? (
-              suggestedProducts.map((product) => (
+              suggestedProducts.slice(0, 4).map((product) => (
                 <div key={product._id} className="col-lg-3 col-sm-6 col-12">
                   <div className="product-card">
                     <Link to={`/products/${product._id}`}>
                       <img src={product.imageUrl} alt={product.title} />
                     </Link>
                     <div className="product-infor">
-                      <h2>{product.title}</h2>
-                      <div>Giá: {product.basePrice}đ</div>
+                      <h2>
+                        <Link to={`/products/${product._id}`}>
+                          {product.title}
+                        </Link>
+                      </h2>
+                      <div>Giá: {formatCurrency(product.basePrice)}đ</div>
                       <p>{product.categoryId?.title || "Không xác định"}</p>
                       <button>
                         <Link to={`/products/${product._id}`}>Mua ngay</Link>
@@ -703,42 +707,6 @@ const ProductDetailPage = () => {
                   </div>
                 </div>
               ))
-            ) : (
-              <p>Không có sản phẩm cùng danh mục.</p>
-            )}
-          </div>
-        </div>
-      </section> */}
-      <section className="suggested-products">
-        <div className="container">
-          <h2>Sản phẩm cùng danh mục:</h2>
-          <div className="row">
-            {suggestedProducts.length > 0 ? (
-              suggestedProducts.slice(0, 4).map(
-                (
-                  product // Chỉ lấy 4 sản phẩm đầu tiên
-                ) => (
-                  <div key={product._id} className="col-lg-3 col-sm-6 col-12">
-                    <div className="product-card">
-                      <Link to={`/products/${product._id}`}>
-                        <img src={product.imageUrl} alt={product.title} />
-                      </Link>
-                      <div className="product-infor">
-                        <h2>
-                          <Link to={`/products/${product._id}`}>
-                            {product.title}
-                          </Link>
-                        </h2>
-                        <div>Giá: {formatCurrency(product.basePrice)}đ</div>
-                        <p>{product.categoryId?.title || "Không xác định"}</p>
-                        <button>
-                          <Link to={`/products/${product._id}`}>Mua ngay</Link>
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )
-              )
             ) : (
               <p>Không có sản phẩm cùng danh mục.</p>
             )}

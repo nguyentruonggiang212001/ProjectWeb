@@ -1,31 +1,3 @@
-// import { createAsyncThunk } from "@reduxjs/toolkit";
-// import {
-//   addCart,
-//   deleteCart,
-//   getAllCart,
-//   updateCart,
-// } from "../../services/cartServices";
-
-// export const fetchCarts = createAsyncThunk("carts/fetchCarts", async (id) => {
-//   return await getAllCart(id);
-// });
-
-// export const createCart = createAsyncThunk("cart/createCarts", async (cart) => {
-//   return await addCart(cart);
-// });
-
-// export const editCarts = createAsyncThunk(
-//   "cart/editCarts",
-//   async ({ id, cart }) => {
-//     return await updateCart(id, cart);
-//   }
-// );
-
-// export const removeCarts = createAsyncThunk("cart/removeCarts", async (id) => {
-//   await deleteCart(id);
-//   return id;
-// });
-
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import {
   addCart,
@@ -45,17 +17,6 @@ export const fetchCarts = createAsyncThunk(
 export const createCart = createAsyncThunk("cart/createCarts", async (cart) => {
   return await addCart(cart);
 });
-
-// export const editCarts = createAsyncThunk(
-//   "cart/editCarts",
-//   async ({ userId, cartId, cart }) => {
-//     if (!userId || !cartId) {
-//       console.error("Lỗi: Thiếu userId hoặc cartId khi cập nhật giỏ hàng!");
-//       return { error: "Thiếu userId hoặc cartId!" };
-//     }
-//     return await updateCart(userId, cart);
-//   }
-// );
 
 const updateCartForGuest = async (cart) => {
   // Lưu trữ giỏ hàng vào local storage hoặc cập nhật state trong Redux
