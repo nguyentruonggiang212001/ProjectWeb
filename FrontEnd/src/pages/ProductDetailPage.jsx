@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { getByCategory, getById } from "../services/productServices";
 import "../css/style.css";
 import "../css/grid.css";
@@ -42,6 +42,8 @@ const ProductDetailPage = () => {
     data.categoryId?.title.replace(/\s+/g, "-").toLowerCase() ||
     "default-slug";
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     if (user?._id) {
       dispatch(fetchCarts(user._id));
@@ -51,14 +53,14 @@ const ProductDetailPage = () => {
   const addCartHandler = async () => {
     if (!selectedVariant) {
       toast.error("Sản phẩm không có sẵn trong kho!");
-      return;
+      return false;
     }
 
     if (quantity < 1 || quantity > selectedVariant.stock) {
       toast.error(
         `Số lượng của loại sản phẩm này còn ${selectedVariant.stock} vui lòng chọn loại khác.`
       );
-      return;
+      return false;
     }
 
     // Tạo đối tượng sản phẩm để thêm vào giỏ hàng
@@ -99,7 +101,7 @@ const ProductDetailPage = () => {
       localStorage.setItem("guestCart", JSON.stringify(guestCart));
       window.dispatchEvent(new Event("storage"));
       toast.success("Sản phẩm đã được thêm vào giỏ hàng tạm thời!");
-      return;
+      return true;
     }
 
     // Nếu người dùng đã đăng nhập, kiểm tra số lượng trong giỏ hàng
@@ -130,10 +132,12 @@ const ProductDetailPage = () => {
         dispatch(createCart(updatedCart));
         dispatch(fetchCarts(user._id));
         toast.success("Sản phẩm đã được thêm vào giỏ hàng!");
+        return true;
       }
     } catch (error) {
       console.error("Lỗi khi thêm vào giỏ hàng:", error);
       toast.error("Lỗi khi thêm sản phẩm vào giỏ hàng. Vui lòng thử lại!");
+      return false;
     }
   };
 
@@ -651,8 +655,26 @@ const ProductDetailPage = () => {
                 </button>
                 <button className="buy-bag">
                   <i className="fa-solid fa-bag-shopping"></i>
+                  {/* <span>
+                    <a href="/cart" onClick={addCartHandler}>
+                      Mua ngay
+                    </a>
+                  </span> */}
                   <span>
-                    <a href="/cart">Mua ngay</a>
+                    <a
+                      href="/cart"
+                      onClick={async (e) => {
+                        e.preventDefault();
+                        const success = await addCartHandler();
+                        if (success) {
+                          setTimeout(() => {
+                            navigate("/cart");
+                          }, 3000);
+                        }
+                      }}
+                    >
+                      Mua ngay
+                    </a>
                   </span>
                 </button>
               </div>

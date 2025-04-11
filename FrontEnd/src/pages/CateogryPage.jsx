@@ -3,17 +3,14 @@ import { useParams } from "react-router-dom";
 import CategoryProductList from "../components/CategoryProductList";
 
 const CategoryPage = () => {
-  // const { id } = useParams();
-  const { slug } = useParams(); // Thay đổi từ id sang slug
+  const { slug } = useParams(); 
   const [category, setCategory] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCategory = async () => {
       try {
-        // const response = await fetch(
-        //   `http://127.0.0.1:9999/api/category/${id}`
-        // );
+      
         const response = await fetch(
           `http://127.0.0.1:9999/api/category/slug/${slug}` // Sử dụng slug để fetch
         );
