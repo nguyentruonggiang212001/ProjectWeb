@@ -28,11 +28,14 @@ const CategoryProductList = ({ slug: propSlug }) => {
   // const maxProductPrice = Math.max(...products.map((p) => p.basePrice), 0);
   const maxProductPrice = Math.max(
     ...products.map((p) => {
-      const isSale = p.categoryId?.title === "Sale";
+      // Kiểm tra nếu sản phẩm có title là "Other"
+      const isSale = p.categoryId?.title === "Other"; // Sử dụng categoryId để kiểm tra
       return isSale ? p.basePrice * 0.5 : p.basePrice; // Lấy giá đã giảm nếu là sản phẩm Sale
     }),
     0
   );
+  console.log("gia cua maxPrice", maxProductPrice);
+
   const [priceRange, setPriceRange] = useState([0, maxProductPrice]);
 
   //  Fetch lại sản phẩm nếu Redux Store rỗng
@@ -52,15 +55,15 @@ const CategoryProductList = ({ slug: propSlug }) => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const response = await getBySlugCategory(slug); // Gọi API lấy category theo slug
-        // console.log("Response from API:", response);
+        const response = await getBySlugCategory(slug);
         if (response?.category) {
           setCategory(response.category);
-          setProducts(response.category.products); // Lấy products từ category
+          setProducts(response.category.products);
+
           // Tính giá cao nhất để thiết lập khoảng giá
           const maxPrice = Math.max(
             ...response.category.products.map((p) => {
-              const isSale = p.categoryId?.title === "Sale";
+              const isSale = p.categoryId?.title === "Other"; // Kiểm tra title
               return isSale ? p.basePrice * 0.5 : p.basePrice; // Lấy giá đã giảm nếu là sản phẩm Sale
             }),
             0
@@ -100,10 +103,11 @@ const CategoryProductList = ({ slug: propSlug }) => {
       })
     : products;
 
-  //  Lọc sản phẩm theo khoảng giá
-  const filteredByColorAndPrice = filteredByColor.filter(
-    (p) => p.basePrice >= priceRange[0] && p.basePrice <= priceRange[1]
-  );
+  const filteredByColorAndPrice = filteredByColor.filter((p) => {
+    const isSale = p.categoryId?.title === "Other";
+    const priceToCheck = isSale ? p.basePrice * 0.5 : p.basePrice;
+    return priceToCheck >= priceRange[0] && priceToCheck <= priceRange[1];
+  });
 
   // Lấy số sản phẩm hiển thị
   const displayedProducts = filteredByColorAndPrice.slice(0, visibleProducts);
@@ -159,6 +163,7 @@ const CategoryProductList = ({ slug: propSlug }) => {
                     value={priceRange}
                     onChange={setPriceRange}
                   />
+
                   <div
                     className="price-content"
                     style={{
@@ -186,7 +191,6 @@ const CategoryProductList = ({ slug: propSlug }) => {
                     </select>
                   </label>
                 </div>
-
                 <div className="color-filter">
                   <p>Lọc sản phẩm theo màu:</p>
                   {["Red", "Blue", "Green", "Black", "White"].map((color) => (
@@ -217,11 +221,11 @@ const CategoryProductList = ({ slug: propSlug }) => {
               className="row"
               style={{
                 width: filteredByColorAndPrice.length <= 2 ? "1000px" : "auto",
-                margin: "0 auto", // Căn giữa khi có ít sản phẩm
+                margin: "0 auto",
               }}
             >
               {sortedDisplayedProducts.map((product) => {
-                const isSale = product.categoryId?.title === "Sale";
+                const isSale = product.categoryId?.title === "Other";
                 const discountedPrice = isSale
                   ? product.basePrice * 0.5
                   : product.basePrice;
@@ -269,7 +273,6 @@ const CategoryProductList = ({ slug: propSlug }) => {
               })}
             </div>
           </div>
-
           {filteredByColorAndPrice.length === 0 && (
             <div
               className="no-products-message"
@@ -299,7 +302,6 @@ const CategoryProductList = ({ slug: propSlug }) => {
               </p>
             </div>
           )}
-
           {isCategoryPage ? (
             visibleProducts < filteredByColorAndPrice.length && (
               <div style={{ textAlign: "center", marginTop: "20px" }}>

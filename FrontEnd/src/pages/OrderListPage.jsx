@@ -3,6 +3,8 @@ import { getOrdersByUserId, deleteOrder } from "../services/orderService";
 import OrderItem from "./OrderItem";
 import box from "../img/Order.svg";
 import { getById } from "../services/productServices";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const OrderListPage = () => {
   const [orders, setOrders] = useState([]);
@@ -21,6 +23,7 @@ const OrderListPage = () => {
     setLoading(true);
     try {
       const data = await getOrdersByUserId(user._id);
+      console.log(data);
       setOrders(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Lỗi khi lấy danh sách đơn hàng:", error);
@@ -67,7 +70,7 @@ const OrderListPage = () => {
       const product = productData[item.productId];
       const categoryTitle = product?.categoryId?.title || "Không xác định";
 
-      if (categoryTitle === "Sale") {
+      if (categoryTitle === "Other") {
         price *= 0.5; // Giảm giá 50% nếu là sản phẩm Sale
       }
 
@@ -80,14 +83,14 @@ const OrderListPage = () => {
     const now = Date.now();
 
     if (lastCancelTime && now - lastCancelTime < 15 * 60 * 1000) {
-      alert("Bạn chỉ có thể hủy đơn hàng tiếp theo sau 15 phút.");
+      toast.error("Bạn chỉ có thể hủy đơn hàng tiếp theo sau 15 phút.");
       return;
     }
 
     if (window.confirm("Bạn có chắc chắn muốn hủy đơn hàng này không?")) {
       try {
         await deleteOrder(orderId);
-        alert("Đơn hàng đã được hủy!");
+        toast.success("Đơn hàng đã được hủy!");
         setOrders((prevOrders) =>
           prevOrders.filter((order) => order._id !== orderId)
         );
@@ -96,7 +99,7 @@ const OrderListPage = () => {
         localStorage.setItem(`lastCancelTime_${user._id}`, now);
       } catch (error) {
         console.error("Lỗi khi hủy đơn hàng:", error);
-        alert("Không thể hủy đơn hàng!");
+        toast.error("Không thể hủy đơn hàng!");
       }
     }
   };
@@ -210,6 +213,7 @@ const OrderListPage = () => {
           </div>
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 };

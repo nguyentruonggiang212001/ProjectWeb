@@ -17,7 +17,7 @@ import { getVariantsByProductId } from "../services/variantService";
 import { addCart } from "../services/cartServices";
 import { AuthContext } from "../contexts/AuthContext";
 import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css"; // Import CSS cho toast
+import "react-toastify/dist/ReactToastify.css";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -41,28 +41,23 @@ const ProductDetailPage = () => {
     data.categoryId?.slug ||
     data.categoryId?.title.replace(/\s+/g, "-").toLowerCase() ||
     "default-slug";
-
   const navigate = useNavigate();
-
   useEffect(() => {
     if (user?._id) {
       dispatch(fetchCarts(user._id));
     }
   }, [user?._id, dispatch]);
-
   const addCartHandler = async () => {
     if (!selectedVariant) {
       toast.error("Sản phẩm không có sẵn trong kho!");
       return false;
     }
-
     if (quantity < 1 || quantity > selectedVariant.stock) {
       toast.error(
         `Số lượng của loại sản phẩm này còn ${selectedVariant.stock} vui lòng chọn loại khác.`
       );
       return false;
     }
-
     // Tạo đối tượng sản phẩm để thêm vào giỏ hàng
     const cartItem = {
       productId: id || selectedVariant.productId,
@@ -73,16 +68,13 @@ const ProductDetailPage = () => {
       size: selectedSize,
       color: selectedColor,
     };
-
     // Nếu người dùng chưa đăng nhập
     if (!user?._id) {
       const guestCart = JSON.parse(localStorage.getItem("guestCart")) || [];
-
       // Kiểm tra xem sản phẩm đã có trong giỏ hàng tạm thời chưa
       const existingItemIndex = guestCart.findIndex(
         (item) => item.variantId === cartItem.variantId
       );
-
       if (existingItemIndex !== -1) {
         // Nếu đã có, cập nhật số lượng
         const newQuantity =
@@ -103,7 +95,6 @@ const ProductDetailPage = () => {
       toast.success("Sản phẩm đã được thêm vào giỏ hàng tạm thời!");
       return true;
     }
-
     // Nếu người dùng đã đăng nhập, kiểm tra số lượng trong giỏ hàng
     const cartQuantity =
       carts.find((item) => item.variantId === selectedVariant?._id)?.quantity ||
@@ -113,17 +104,14 @@ const ProductDetailPage = () => {
       toast.error("Số lượng trong giỏ hàng không được vượt quá tồn kho!");
       return;
     }
-
     // Thêm thông tin người dùng vào cartItem
     cartItem.userId = user._id;
-
     // Kiểm tra dữ liệu hợp lệ
     if (!cartItem.userId || !cartItem.productId || !cartItem.variantId) {
       console.error("Dữ liệu không hợp lệ khi gửi API!", cartItem);
       toast.error("Lỗi: Dữ liệu không hợp lệ!");
       return;
     }
-
     try {
       // Gọi API thêm vào giỏ hàng
       const updatedCart = await addCart(cartItem);
@@ -140,7 +128,6 @@ const ProductDetailPage = () => {
       return false;
     }
   };
-
   useEffect(() => {
     if (id) {
       (async () => {
@@ -152,42 +139,38 @@ const ProductDetailPage = () => {
       })();
     }
   }, [dispatch, id]);
-
   useEffect(() => {
     if (!id) return;
 
     (async () => {
       try {
         const productData = await getById(id);
+
         if (!productData || !productData._id) {
           console.error(" Lỗi: Không tìm thấy sản phẩm!");
           return;
         }
         setData(productData);
-
         // Lấy categoryId từ productData
         const categoryId =
           typeof productData.categoryId === "object"
             ? productData.categoryId._id
             : productData.categoryId;
-
         // Gọi API lấy sản phẩm cùng danh mục
         const suggested = await getByCategory(categoryId);
-
         // Lọc sản phẩm để loại bỏ chính sản phẩm hiện tại
         const filteredSuggested = suggested.filter((product) => {
           const productCategoryId =
-            typeof product.categoryId === "object"
-              ? product.categoryId._id
-              : product.categoryId;
-
+            typeof product.categoryId === "object" && product.categoryId
+              ? product.categoryId._id // Sử dụng optional chaining
+              : null; // Nếu không có categoryId, trả về null
           return (
+            productCategoryId && // Kiểm tra categoryId có tồn tại
             String(productCategoryId) === String(categoryId) &&
             String(product._id) !== String(productData._id)
           );
         });
 
-        // console.log(" Sản phẩm sau khi lọc:", filteredSuggested);
         setSuggestedProducts(filteredSuggested);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu sản phẩm:", error);
@@ -206,7 +189,6 @@ const ProductDetailPage = () => {
             return;
           }
           setData(productData);
-
           // Lấy attributes từ variants
           if (productData.variants && productData.variants.length > 0) {
             const allAttributes = productData.variants.flatMap(
@@ -225,7 +207,6 @@ const ProductDetailPage = () => {
 
   const formatCurrency = (amount) =>
     new Intl.NumberFormat("vi-VN").format(amount).replace(/\./g, ",");
-
   useEffect(() => {
     if (id) {
       setVariants([]);
@@ -238,7 +219,6 @@ const ProductDetailPage = () => {
               (variant.productId?._id === id || variant.productId === id)
           );
           setVariants(filteredVariants);
-
           // Kiểm tra sản phẩm có Size hoặc Color không
           const hasSize = filteredVariants.some((variant) =>
             variant.attributes.some((attr) => attr.attributeId.name === "Size")
@@ -246,10 +226,8 @@ const ProductDetailPage = () => {
           const hasColor = filteredVariants.some((variant) =>
             variant.attributes.some((attr) => attr.attributeId.name === "Color")
           );
-
           setEnableSize(hasSize);
           setEnableColor(hasColor);
-
           // Nếu không có kích thước, tự động chọn màu sắc đầu tiên
           if (!hasSize && hasColor) {
             const firstColor = filteredVariants[0].attributes.find(
@@ -264,7 +242,6 @@ const ProductDetailPage = () => {
       })();
     }
   }, [id]);
-
   useEffect(() => {
     const uniqueColors = [
       ...new Set(
@@ -284,7 +261,6 @@ const ProductDetailPage = () => {
       updateVariant(selectedColor, uniqueColors[0]);
     }
   }, [variants]);
-
   useEffect(() => {
     const uniqueSizes = [
       ...new Set(
@@ -304,7 +280,6 @@ const ProductDetailPage = () => {
       updateVariant(selectedColor, uniqueSizes[0]); // Cập nhật SKU ngay
     }
   }, [variants]);
-
   useEffect(() => {
     if (selectedSize) {
       updateVariant(selectedColor, selectedSize);
@@ -325,12 +300,11 @@ const ProductDetailPage = () => {
           )
         : true;
 
-      // Nếu không có kích thước, chỉ cần kiểm tra màu sắc
       const hasSize = enableSize
         ? variant.attributes.some(
             (attr) => attr.attributeId.name === "Size" && attr.value === size
           )
-        : true; // Nếu không có kích thước, trả về true
+        : true;
 
       return hasColor && hasSize;
     });
@@ -405,7 +379,7 @@ const ProductDetailPage = () => {
                 <div className="price">
                   {selectedVariant ? (
                     // Nếu có biến thể, hiển thị giá của biến thể
-                    data.categoryId?.title === "Sale" ? (
+                    data.categoryId?.title === "Other" ? (
                       <>
                         <div style={{ display: "flex" }} className="price">
                           {formatCurrency(selectedVariant.price * 0.5)}đ
@@ -425,7 +399,7 @@ const ProductDetailPage = () => {
                       </div>
                     )
                   ) : // Nếu không có biến thể, hiển thị basePrice
-                  data.categoryId?.title === "Sale" ? (
+                  data.categoryId?.title === "Other" ? (
                     <>
                       <div style={{ display: "flex" }} className="price">
                         {formatCurrency(data.basePrice * 0.5)}đ
@@ -462,10 +436,8 @@ const ProductDetailPage = () => {
                       <img src={giftbox} alt="box" />
                       <p>
                         Mua áo chống nắng dáng dài chỉ từ
-                        <strong style={{ marginLeft: "4px" }}>
-                          325.000đ
-                        </strong>{" "}
-                        .<a href="#">Xem hướng dẫn.</a>
+                        <strong style={{ marginLeft: "4px" }}>325.000đ</strong>
+                        <a href="#">Xem hướng dẫn.</a>
                       </p>
                     </li>
                     <li>
@@ -563,15 +535,17 @@ const ProductDetailPage = () => {
                 )}
               </div>
               <div>
-                {Array.isArray(attributes) && attributes.length > 0 ? (
-                  attributes
+                {selectedVariant &&
+                Array.isArray(selectedVariant.attributes) &&
+                selectedVariant.attributes.length > 0 ? (
+                  selectedVariant.attributes
                     .filter(
                       (attr) =>
                         attr.attributeId.name.toLowerCase() !== "size" &&
                         attr.attributeId.name.toLowerCase() !== "color"
                     )
                     .map((attr) => (
-                      <div key={attr._id}>
+                      <div key={attr.attributeId._id}>
                         <strong>{attr.attributeId.name}:</strong>
                         <span>{attr.value}</span>
                       </div>
@@ -608,7 +582,6 @@ const ProductDetailPage = () => {
                     onChange={(e) => {
                       let value =
                         parseInt(e.target.value.replace(/\D/g, ""), 10) || 1;
-
                       //  Kiểm tra nếu số lượng vượt quá tồn kho
                       if (value > selectedVariant?.stock) {
                         alert(
@@ -626,7 +599,6 @@ const ProductDetailPage = () => {
                       outline: "none",
                     }}
                   />
-
                   <button
                     className="right"
                     onClick={() =>
@@ -639,7 +611,6 @@ const ProductDetailPage = () => {
                   </button>
                 </div>
               </div>
-
               <div className="buy">
                 <button className="buy-cart">
                   <i className="fa-solid fa-cart-shopping"></i>
@@ -655,11 +626,6 @@ const ProductDetailPage = () => {
                 </button>
                 <button className="buy-bag">
                   <i className="fa-solid fa-bag-shopping"></i>
-                  {/* <span>
-                    <a href="/cart" onClick={addCartHandler}>
-                      Mua ngay
-                    </a>
-                  </span> */}
                   <span>
                     <a
                       href="/cart"

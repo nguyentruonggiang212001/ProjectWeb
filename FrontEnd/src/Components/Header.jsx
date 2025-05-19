@@ -202,7 +202,6 @@ const Header = () => {
               <div className="header-icon-cart">
                 <Link to="/cart">
                   <i className="fa-solid fa-cart-shopping">
-                    {/* <div>{carts.length}</div> */}
                     <div>{totalCartItems}</div>
                   </i>
                 </Link>
@@ -381,7 +380,7 @@ const Header = () => {
                 <Link
                   onMouseEnter={(e) => (e.target.style.color = "red")}
                   onMouseLeave={(e) => (e.target.style.color = "black")}
-                  to="/category/sale"
+                  to="/category/other"
                 >
                   Sale
                 </Link>

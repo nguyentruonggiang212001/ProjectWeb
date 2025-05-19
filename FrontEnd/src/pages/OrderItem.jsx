@@ -44,7 +44,7 @@ const OrderItem = ({ item }) => {
   );
 
   // Giảm giá 50% nếu sản phẩm thuộc danh mục "Sale"
-  if (product?.categoryId?.title === "Sale") {
+  if (product?.categoryId?.title === "Other") {
     price *= 0.5;
   }
 

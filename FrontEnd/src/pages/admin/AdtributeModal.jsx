@@ -115,6 +115,32 @@ const AttributeModal = ({ attribute, onClose, refreshAttributes }) => {
           {attribute ? "Chỉnh sửa Thuộc tính" : "Thêm Thuộc tính"}
         </h3>
 
+        {/* Ô nhập giá trị mới */}
+        <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+          <input
+            type="text"
+            placeholder="Nhập giá trị mới..."
+            value={newValue}
+            onChange={(e) => setNewValue(e.target.value)}
+            style={{ flex: 1, padding: "8px" }}
+          />
+          <button
+            type="button"
+            onClick={handleAddValue}
+            style={{
+              padding: "8px",
+              fontSize: "16px",
+              backgroundColor: "#4CAF50",
+              color: "white",
+              border: "none",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Thêm
+          </button>
+        </div>
+
         <label>Tên Thuộc tính:</label>
         <input
           type="text"
@@ -122,7 +148,12 @@ const AttributeModal = ({ attribute, onClose, refreshAttributes }) => {
           value={formData.name}
           onChange={handleChange}
           required
-          style={{ width: "100%", padding: "8px", marginBottom: "10px" }}
+          style={{
+            width: "100%",
+            padding: "8px",
+            marginBottom: "10px",
+            marginTop: "10px",
+          }}
         />
 
         <table style={{ width: "100%", borderCollapse: "collapse" }}>
@@ -163,32 +194,6 @@ const AttributeModal = ({ attribute, onClose, refreshAttributes }) => {
           </tbody>
         </table>
 
-        {/* Ô nhập giá trị mới */}
-        <div style={{ display: "flex", gap: "10px", marginTop: "10px" }}>
-          <input
-            type="text"
-            placeholder="Nhập giá trị mới..."
-            value={newValue}
-            onChange={(e) => setNewValue(e.target.value)}
-            style={{ flex: 1, padding: "8px" }}
-          />
-          <button
-            type="button"
-            onClick={handleAddValue}
-            style={{
-              padding: "8px",
-              fontSize: "16px",
-              backgroundColor: "#4CAF50",
-              color: "white",
-              border: "none",
-              borderRadius: "5px",
-              cursor: "pointer",
-            }}
-          >
-            Thêm
-          </button>
-        </div>
-
         {/* Nút phân trang */}
         {totalPages > 1 && (
           <div
@@ -203,7 +208,7 @@ const AttributeModal = ({ attribute, onClose, refreshAttributes }) => {
               disabled={currentPage === 1}
               style={{
                 padding: "5px 10px",
-                backgroundColor: "blue",
+                backgroundColor: "gray",
                 color: "white",
                 border: "none",
                 borderRadius: "5px",
@@ -221,7 +226,7 @@ const AttributeModal = ({ attribute, onClose, refreshAttributes }) => {
               disabled={currentPage === totalPages}
               style={{
                 padding: "10px 15px",
-                backgroundColor: "green",
+                backgroundColor: "#ff9800",
                 color: "white",
                 border: "none",
                 borderRadius: "5px",

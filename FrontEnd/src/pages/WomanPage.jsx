@@ -17,10 +17,7 @@ const WomanPage = () => {
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
-
-  // if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
-
   return (
     <div>
       <div className="container">
@@ -80,7 +77,6 @@ const WomanPage = () => {
                     </div>
                   </div>
                 </div>
-
                 <div className="vocher-item">
                   <div className="voucher-item-info">
                     <div className="voucher-item-detail ">
@@ -158,7 +154,6 @@ const WomanPage = () => {
               </div>
             </div>
           </div>
-
           <div className="code">
             <p>ÁO KHOÁC PHAO & LÔNG VŨ NỮ</p>
           </div>
@@ -199,18 +194,15 @@ const WomanPage = () => {
           <div className="home-page">
             <CategoryProductList slug="quan-dai-va-jean-nu" />
           </div>
-
           <div className="code">
             <p>GIÀY THỂ THAO & GIÀY CHẠY NỮ</p>
           </div>
-
           <div className="line-home-page">
             <span></span>
           </div>
           <div className="home-page">
             <CategoryProductList slug="giay-the-thao-va-giay-chay-bo-nu" />
           </div>
-
           <div className="code">
             <p>ĐỒ LÓT NỮ</p>
           </div>

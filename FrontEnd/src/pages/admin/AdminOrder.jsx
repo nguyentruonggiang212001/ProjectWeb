@@ -108,7 +108,7 @@ const AdminOrders = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container" style={{ maxWidth: "1600px" }}>
       <h2
         style={{
           textAlign: "center",

@@ -87,7 +87,7 @@ const AdminCategories = () => {
       <h2
         style={{
           textAlign: "center",
-          marginBottom: "20px",
+          margin: "20px",
           fontSize: "24px",
           fontWeight: "bold",
         }}
@@ -176,7 +176,7 @@ const AdminCategories = () => {
                     border: "none",
                   }}
                 >
-                  ✏️ Sửa
+                  Sửa
                 </button>
                 <button
                   onClick={() => handleDeleteCategory(category._id)}
@@ -189,7 +189,7 @@ const AdminCategories = () => {
                     border: "none",
                   }}
                 >
-                  🗑️ Xóa
+                  Xóa
                 </button>
               </td>
             </tr>

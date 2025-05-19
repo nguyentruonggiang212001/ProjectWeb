@@ -37,6 +37,79 @@ const EditVariantModal = ({
     return `TS-${sizePart}-${colorPart}-${randomPart}`;
   };
 
+  // const handleVariantChange = (index, field, value) => {
+  //   setVariants((prevVariants) => {
+  //     const updatedVariants = [...prevVariants];
+  //     updatedVariants[index] = {
+  //       ...updatedVariants[index],
+  //       [field]: value,
+  //       sku: updatedVariants[index].sku || generateSKU(updatedVariants[index]), // Giữ nguyên SKU nếu đã có
+  //     };
+
+  //     // Cập nhật giá trị cho các thuộc tính khác
+  //     const attrIndex = updatedVariants[index].attributes.findIndex(
+  //       (attr) => attr.attributeId.name === field
+  //     );
+  //     if (attrIndex !== -1) {
+  //       // Sao chép đối tượng attribute trước khi thay đổi
+  //       const updatedAttributes = [...updatedVariants[index].attributes];
+  //       updatedAttributes[attrIndex] = {
+  //         ...updatedAttributes[attrIndex],
+  //         value: value,
+  //       };
+  //       updatedVariants[index].attributes = updatedAttributes; // Cập nhật lại attributes
+  //     }
+
+  //     return updatedVariants;
+  //   });
+  // };
+
+  // const handleAddVariant = () => {
+  //   setVariants([...variants, { price: 0, color: "", size: "", stock: 0 }]);
+  // };
+
+  // const handleVariantChange = (index, field, value) => {
+  //   setVariants((prevVariants) => {
+  //     const updatedVariants = [...prevVariants];
+  //     updatedVariants[index] = {
+  //       ...updatedVariants[index],
+  //       [field]: value,
+  //       sku: updatedVariants[index].sku || generateSKU(updatedVariants[index]), // Giữ nguyên SKU nếu đã có
+  //     };
+
+  //     // Cập nhật giá trị cho các thuộc tính khác
+  //     const attrIndex = updatedVariants[index].attributes.findIndex(
+  //       (attr) => attr.attributeId._id === field // Sử dụng _id để tìm thuộc tính
+  //     );
+  //     if (attrIndex !== -1) {
+  //       // Sao chép đối tượng attribute trước khi thay đổi
+  //       const updatedAttributes = [...updatedVariants[index].attributes];
+  //       updatedAttributes[attrIndex] = {
+  //         ...updatedAttributes[attrIndex],
+  //         value: value,
+  //       };
+  //       updatedVariants[index].attributes = updatedAttributes; // Cập nhật lại attributes
+  //     }
+
+  //     return updatedVariants;
+  //   });
+  // };
+  // const handleAddVariant = () => {
+  //   const newVariant = {
+  //     price: 0,
+  //     color: "",
+  //     size: "",
+  //     stock: 0,
+  //     attributes: attributesList
+  //       .filter((attr) => attr.name !== "Size" && attr.name !== "Color")
+  //       .map((attr) => ({
+  //         attributeId: { _id: attr._id },
+  //         value: "", // Giá trị mặc định là trống
+  //       })),
+  //   };
+  //   setVariants([...variants, newVariant]);
+  // };
+
   const handleVariantChange = (index, field, value) => {
     setVariants((prevVariants) => {
       const updatedVariants = [...prevVariants];
@@ -45,12 +118,39 @@ const EditVariantModal = ({
         [field]: value,
         sku: updatedVariants[index].sku || generateSKU(updatedVariants[index]), // Giữ nguyên SKU nếu đã có
       };
+
+      // Cập nhật giá trị cho các thuộc tính khác
+      const attrIndex = updatedVariants[index].attributes.findIndex(
+        (attr) => attr.attributeId._id === field // Sử dụng _id để tìm thuộc tính
+      );
+      if (attrIndex !== -1) {
+        // Sao chép đối tượng attribute trước khi thay đổi
+        const updatedAttributes = [...updatedVariants[index].attributes];
+        updatedAttributes[attrIndex] = {
+          ...updatedAttributes[attrIndex],
+          value: value,
+        };
+        updatedVariants[index].attributes = updatedAttributes; // Cập nhật lại attributes
+      }
+
       return updatedVariants;
     });
   };
 
   const handleAddVariant = () => {
-    setVariants([...variants, { price: 0, color: "", size: "", stock: 0 }]);
+    const newVariant = {
+      price: 0,
+      color: "",
+      size: "",
+      stock: 0,
+      attributes: attributesList
+        .filter((attr) => attr.name !== "Size" && attr.name !== "Color")
+        .map((attr) => ({
+          attributeId: { _id: attr._id },
+          value: "", // Giá trị mặc định là trống
+        })),
+    };
+    setVariants([...variants, newVariant]);
   };
 
   const handleDeleteVariant = async (index) => {
@@ -72,6 +172,88 @@ const EditVariantModal = ({
     }
   };
 
+  // const handleSave = async () => {
+  //   try {
+  //     if (!product._id) {
+  //       alert("Sản phẩm chưa được tạo, không thể lưu biến thể!");
+  //       return;
+  //     }
+
+  //     const sizeAttribute = attributesList.find((attr) => attr.name === "Size");
+  //     const colorAttribute = attributesList.find(
+  //       (attr) => attr.name === "Color"
+  //     );
+
+  //     if (!sizeAttribute || !colorAttribute) {
+  //       alert("Không tìm thấy thuộc tính Size hoặc Color!");
+  //       return;
+  //     }
+
+  //     for (let variant of variants) {
+  //       //  Định dạng lại dữ liệu variant
+  //       const formattedVariant = {
+  //         productId: { _id: product._id }, //  Đảm bảo productId là object
+  //         attributes: [
+  //           { attributeId: { _id: colorAttribute._id }, value: variant.color }, //  attributeId là object
+  //           { attributeId: { _id: sizeAttribute._id }, value: variant.size },
+  //         ],
+  //         stock: variant.stock,
+  //         price: variant.price,
+  //         sku: variant.sku || generateSKU(variant),
+  //       };
+
+  //       //  In ra log kiểm tra trước khi gửi
+  //       console.log(
+  //         variant._id ? "Cập nhật biến thể:" : "Tạo biến thể mới:",
+  //         formattedVariant
+  //       );
+  //       console.log("Variant Attributes:", variant.attributes);
+
+  //       if (variant._id) {
+  //         await updateVariant(variant._id, formattedVariant);
+  //       } else {
+  //         await createVariant(formattedVariant);
+  //       }
+  //     }
+
+  //     alert("Lưu biến thể thành công!");
+  //     onClose();
+  //   } catch (error) {
+  //     console.error("Lỗi khi lưu biến thể:", error);
+  //     alert("Có lỗi xảy ra!");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   const fetchAttributes = async () => {
+  //     try {
+  //       const attributes = await getAllAttributes();
+  //       console.log(" Danh sách thuộc tính:", attributes);
+  //       setAttributesList(attributes);
+
+  //       const colorsData = attributes.find((attr) => attr.name === "Color");
+  //       const sizesData = attributes.find((attr) => attr.name === "Size");
+
+  //       let newColors = colorsData ? colorsData.values : [];
+  //       let newSizes = sizesData ? sizesData.values : [];
+
+  //       // Kiểm tra xem có màu/kích thước nào trong variants nhưng chưa có trong danh sách không
+  //       const variantColors = product.variants.map((v) => v.color);
+  //       const variantSizes = product.variants.map((v) => v.size);
+
+  //       newColors = [...new Set([...newColors, ...variantColors])];
+  //       newSizes = [...new Set([...newSizes, ...variantSizes])];
+
+  //       setColors(newColors);
+  //       setSizes(newSizes);
+  //     } catch (error) {
+  //       console.error("Lỗi khi lấy thuộc tính:", error);
+  //     }
+  //   };
+
+  //   fetchAttributes();
+  // }, [product]);
+
   const handleSave = async () => {
     try {
       if (!product._id) {
@@ -90,23 +272,49 @@ const EditVariantModal = ({
       }
 
       for (let variant of variants) {
-        //  Định dạng lại dữ liệu variant
         const formattedVariant = {
-          productId: { _id: product._id }, //  Đảm bảo productId là object
+          productId: { _id: product._id },
           attributes: [
-            { attributeId: { _id: colorAttribute._id }, value: variant.color }, //  attributeId là object
-            { attributeId: { _id: sizeAttribute._id }, value: variant.size },
+            {
+              attributeId: { _id: colorAttribute._id },
+              value: variant.color || "",
+            },
+            {
+              attributeId: { _id: sizeAttribute._id },
+              value: variant.size || "",
+            },
           ],
           stock: variant.stock,
           price: variant.price,
           sku: variant.sku || generateSKU(variant),
         };
 
-        //  In ra log kiểm tra trước khi gửi
-        console.log(
-          variant._id ? "Cập nhật biến thể:" : "Tạo biến thể mới:",
-          formattedVariant
+        // Lấy các thuộc tính khác
+        const otherAttributes = attributesList.filter(
+          (attr) => attr.name !== "Color" && attr.name !== "Size"
         );
+
+        for (let attr of otherAttributes) {
+          const attrValue =
+            variant.attributes.find((a) => a.attributeId._id === attr._id)
+              ?.value || ""; // Nếu không có giá trị, để trống
+          formattedVariant.attributes.push({
+            attributeId: { _id: attr._id },
+            value: attrValue,
+          });
+        }
+
+        // Kiểm tra xem tất cả các thuộc tính đều có giá trị không
+        const hasEmptyValue = formattedVariant.attributes.some(
+          (attr) => !attr.value
+        );
+        if (hasEmptyValue) {
+          alert("Vui lòng chọn giá trị cho tất cả các thuộc tính.");
+          return;
+        }
+
+        // Ghi log dữ liệu gửi đi
+        console.log("Dữ liệu gửi đi:", formattedVariant);
 
         if (variant._id) {
           await updateVariant(variant._id, formattedVariant);
@@ -127,9 +335,10 @@ const EditVariantModal = ({
     const fetchAttributes = async () => {
       try {
         const attributes = await getAllAttributes();
-        console.log(" Danh sách thuộc tính:", attributes);
+        console.log("Danh sách thuộc tính:", attributes);
         setAttributesList(attributes);
 
+        // Lấy danh sách màu sắc và kích thước
         const colorsData = attributes.find((attr) => attr.name === "Color");
         const sizesData = attributes.find((attr) => attr.name === "Size");
 
@@ -145,13 +354,19 @@ const EditVariantModal = ({
 
         setColors(newColors);
         setSizes(newSizes);
+
+        // Lấy các thuộc tính khác (như Vải, Cacbon)
+        const otherAttributes = attributes.filter(
+          (attr) => attr.name !== "Color" && attr.name !== "Size"
+        );
+        console.log("Các thuộc tính khác:", otherAttributes);
       } catch (error) {
         console.error("Lỗi khi lấy thuộc tính:", error);
       }
     };
 
     fetchAttributes();
-  }, [product]); // Chạy lại khi sản phẩm thay đổi
+  }, [product]);
 
   useEffect(() => {
     if (product.variants?.length > 0) {
@@ -196,7 +411,7 @@ const EditVariantModal = ({
           background: "white",
           padding: "20px",
           borderRadius: "8px",
-          width: "675px",
+          width: "900px",
           maxWidth: "90%",
           position: "relative",
         }}
@@ -292,6 +507,7 @@ const EditVariantModal = ({
                     </td>
 
                     {/* Các thuộc tính mới */}
+
                     {attributesList
                       .filter(
                         (attr) => attr.name !== "Size" && attr.name !== "Color"
@@ -299,7 +515,7 @@ const EditVariantModal = ({
                       .map((attr) => {
                         const attrValue =
                           variant.attributes?.find(
-                            (a) => a.attributeId.name === attr.name
+                            (a) => a.attributeId._id === attr._id
                           )?.value || "";
 
                         return (
@@ -309,7 +525,7 @@ const EditVariantModal = ({
                               onChange={(e) =>
                                 handleVariantChange(
                                   realIndex,
-                                  attr.name,
+                                  attr._id, // Sử dụng _id để cập nhật đúng thuộc tính
                                   e.target.value
                                 )
                               }
@@ -386,7 +602,7 @@ const EditVariantModal = ({
               disabled={currentPage === 1}
               style={{
                 padding: "5px 10px",
-                backgroundColor: "blue",
+                backgroundColor: "gray",
                 color: "white",
                 border: "none",
                 borderRadius: "5px",
@@ -404,7 +620,7 @@ const EditVariantModal = ({
               disabled={currentPage === totalPages}
               style={{
                 padding: "5px 10px",
-                backgroundColor: "green",
+                backgroundColor: "#ff9800",
                 color: "white",
                 border: "none",
                 borderRadius: "5px",

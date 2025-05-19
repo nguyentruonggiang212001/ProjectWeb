@@ -11,7 +11,6 @@ const AdminSidebar = () => {
   return (
     <Drawer variant="permanent" anchor="left" sx={{ width: 240 }}>
       <List>
-        {/* Tiêu đề */}
         <ListItem
           sx={{
             backgroundColor: "#6A5ACD",
@@ -26,8 +25,6 @@ const AdminSidebar = () => {
             Trang Admin
           </Typography>
         </ListItem>
-
-        {/* Các mục menu */}
         <ListItem
           component={Link}
           to="/admin/products/add"
@@ -35,11 +32,9 @@ const AdminSidebar = () => {
         >
           <ListItemText primary="➕ Thêm Sản Phẩm" />
         </ListItem>
-
         <ListItem component={Link} to="/admin/users" sx={{ cursor: "pointer" }}>
           <ListItemText primary="👥 Quản lý Người Dùng" />
         </ListItem>
-
         <ListItem
           component={Link}
           to="/admin/orders"
@@ -47,7 +42,6 @@ const AdminSidebar = () => {
         >
           <ListItemText primary="📝 Quản Lý Đơn Hàng" />
         </ListItem>
-
         <ListItem
           component={Link}
           to="/admin/categories"
@@ -55,7 +49,6 @@ const AdminSidebar = () => {
         >
           <ListItemText primary="📂 Quản Lý Danh Mục" />
         </ListItem>
-
         <ListItem
           component={Link}
           to="/admin/variant"
@@ -63,7 +56,6 @@ const AdminSidebar = () => {
         >
           <ListItemText primary="🔀 Quản Lý Biến Thể" />
         </ListItem>
-
         <ListItem
           component={Link}
           to="/admin/attribute"

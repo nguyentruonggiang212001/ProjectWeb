@@ -76,7 +76,7 @@ const CartList = ({
   const totalProduct = () => {
     let price = product?.price || 0; // Lấy giá gốc
 
-    if (product?.categoryId?.title === "Sale") {
+    if (product?.categoryId?.title === "Other") {
       price *= 0.5; // Giảm giá 50%
     }
 
@@ -278,7 +278,7 @@ const CartList = ({
       <div>
         <span className="price">Giá</span>
         <p className="price-sub">
-          {product?.categoryId?.title === "Sale"
+          {product?.categoryId?.title === "Other"
             ? `${(product.price * 0.5).toLocaleString()}₫`
             : `${product?.price?.toLocaleString()}₫`}
         </p>

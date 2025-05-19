@@ -15,7 +15,6 @@ const AdminVariant = () => {
   const [openModal, setOpenModal] = useState(false);
   const [isAdmin, setIsAdmin] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-
   useEffect(() => {
     const role = localStorage.getItem("role");
     if (role === "admin") {
@@ -23,7 +22,6 @@ const AdminVariant = () => {
       dispatch(fetchProducts());
     }
   }, [dispatch]);
-
   if (!isAdmin) {
     return (
       <h3
@@ -38,9 +36,7 @@ const AdminVariant = () => {
       </h3>
     );
   }
-
   // Phân trang
-
   const productsPerPage = 10;
   const totalPages = Math.ceil(products.length / productsPerPage);
   const currentProducts = products.slice(
@@ -149,7 +145,6 @@ const AdminVariant = () => {
               ))}
             </tbody>
           </table>
-
           <div
             style={{
               display: "flex",
@@ -193,8 +188,6 @@ const AdminVariant = () => {
           </div>
         </>
       )}
-
-      {/* Modal chỉnh sửa variant */}
       {openModal && selectedProduct && (
         <EditVariantModal
           product={selectedProduct}

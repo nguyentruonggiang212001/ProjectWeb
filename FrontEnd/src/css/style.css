@@ -1755,7 +1755,7 @@ tr:nth-child(even) {
     border: none;
     color: #fff;
     font-family: "SVN-Poppins", sans-serif;
-    background-color: rgb(201, 33, 39);
+    background-color: rgb(255, 165, 0);
     cursor: pointer;
 }
 

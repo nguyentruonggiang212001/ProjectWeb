@@ -8,6 +8,8 @@ import { useForm } from "react-hook-form";
 import { orderSchema } from "../schemas/orderShema";
 import { useNavigate } from "react-router-dom";
 import { resetCarts } from "../features/products/cartSlice";
+import "react-toastify/dist/ReactToastify.css";
+import { toast, ToastContainer } from "react-toastify";
 
 const OrderPage = () => {
   const dispatch = useDispatch();
@@ -16,6 +18,7 @@ const OrderPage = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm({
     resolver: zodResolver(orderSchema),
   });
@@ -26,11 +29,19 @@ const OrderPage = () => {
     if (userId) {
       dispatch(fetchCarts(userId));
     }
-  }, [userId, dispatch]);
+    // Lấy thông tin người dùng từ localStorage
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo) {
+      setValue("fullName", userInfo.fullName);
+      setValue("email", userInfo.email);
+      setValue("phone", userInfo.phone);
+      setValue("address", userInfo.address);
+    }
+  }, [userId, dispatch, setValue]);
 
   const handleOrder = async (data) => {
     if (!userId || carts.length === 0) {
-      alert("Giỏ hàng trống hoặc chưa đăng nhập!");
+      toast.error("Giỏ hàng trống hoặc chưa đăng nhập!");
       return;
     }
 
@@ -40,10 +51,12 @@ const OrderPage = () => {
       // Nếu đặt hàng thành công, xóa giỏ hàng trên Redux
       dispatch(resetCarts());
 
-      alert("Đặt hàng thành công!");
-      navigate("/orders");
+      toast.success("Đặt hàng thành công!");
+      setTimeout(() => {
+        navigate("/orders");
+      }, 3000);
     } catch (error) {
-      alert("Đặt hàng thất bại!");
+      toast.error("Đặt hàng thất bại!");
       console.error(error);
     }
   };
@@ -71,12 +84,48 @@ const OrderPage = () => {
     });
   };
 
-  const handlePayment = async () => {
+  // const handlePayment = async () => {
+  //   if (!userId || totalPrice <= 0) {
+  //     toast.error("Vui lòng đăng nhập và thêm sản phẩm vào giỏ hàng!");
+  //     return;
+  //   }
+
+  //   try {
+  //     const response = await fetch("http://localhost:5000/payment", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify({
+  //         userId,
+  //         amount: totalPrice,
+  //       }),
+  //     });
+
+  //     const data = await response.json();
+
+  //     if (data.order_url) {
+  //       window.location.href = data.order_url; // Điều hướng đến trang thanh toán
+  //     } else {
+  //       toast.error("Có lỗi xảy ra khi tạo đơn thanh toán!");
+  //     }
+  //   } catch (error) {
+  //     console.error("Lỗi thanh toán:", error);
+  //     toast.error("Không thể kết nối đến máy chủ!");
+  //   }
+  // };
+
+  const handlePayment = async (data) => {
+    const { fullName, email, phone, address } = data; // Lấy dữ liệu từ form
+
+    console.log(data);
+
     if (!userId || totalPrice <= 0) {
-      alert("Vui lòng đăng nhập và thêm sản phẩm vào giỏ hàng!");
+      toast.error("Vui lòng đăng nhập và thêm sản phẩm vào giỏ hàng!");
       return;
     }
 
+    // Tiến hành thanh toán
     try {
       const response = await fetch("http://localhost:5000/payment", {
         method: "POST",
@@ -89,16 +138,19 @@ const OrderPage = () => {
         }),
       });
 
-      const data = await response.json();
+      const responseData = await response.json();
+      console.log("Phản hồi từ backend:", responseData);
 
-      if (data.order_url) {
-        window.location.href = data.order_url; // Điều hướng đến trang thanh toán
+      if (responseData.order_url) {
+        // Lưu thông tin người dùng vào localStorage
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        window.location.href = responseData.order_url; // Điều hướng đến trang thanh toán
       } else {
-        alert("Có lỗi xảy ra khi tạo đơn thanh toán!");
+        toast.error("Có lỗi xảy ra khi tạo đơn thanh toán!");
       }
     } catch (error) {
       console.error("Lỗi thanh toán:", error);
-      alert("Không thể kết nối đến máy chủ!");
+      toast.error("Không thể kết nối đến máy chủ!");
     }
   };
 
@@ -163,7 +215,7 @@ const OrderPage = () => {
                   </p>
                 </div>
                 <button
-                  onClick={handlePayment}
+                  onClick={handleSubmit(handlePayment)}
                   style={{
                     padding: "10px 20px",
                     background: "#008fe5",
@@ -303,6 +355,7 @@ const OrderPage = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

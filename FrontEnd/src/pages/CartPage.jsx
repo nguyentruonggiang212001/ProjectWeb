@@ -197,7 +197,6 @@ const CartPage = () => {
               {combinedCarts
                 .filter((cart) => cart.productId)
                 .map((cart, index) => {
-                  // console.log("Cart:", cart); // Kiểm tra giá trị của cart
                   return (
                     <CartList
                       key={cart._id || cart.id || index}
