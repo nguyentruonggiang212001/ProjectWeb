@@ -615,11 +615,7 @@ const ProductDetailPage = () => {
                 <button className="buy-cart">
                   <i className="fa-solid fa-cart-shopping"></i>
                   <span>
-                    <a
-                      className="add-product"
-                      href="#!"
-                      onClick={addCartHandler}
-                    >
+                    <a className="add-product" onClick={addCartHandler}>
                       Thêm giỏ hàng
                     </a>
                   </span>

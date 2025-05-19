@@ -15,23 +15,56 @@ export const RegisterForm = () => {
     reset,
   } = useForm({ resolver: zodResolver(registerSchema) });
 
+  // const handleRegisterUser = async (dataBody) => {
+  //   const { confirmPass, ...others } = dataBody;
+  //   console.log("Data gửi lên server:", others);
+
+  //   try {
+  //     const data = await authRequestRegister("/auth/register", others);
+  //     console.log(data);
+
+  //     if (data) {
+  //       toast.success("Đăng ký thành công!");
+  //       setTimeout(() => {
+  //         navigate("/login");
+  //       }, 2000);
+  //     } else {
+  //       toast.error("Đăng ký thất bại, vui lòng thử lại!");
+  //       reset();
+  //     }
+  //   } catch (error) {
+  //     toast.error("Lỗi hệ thống, vui lòng thử lại sau!");
+  //   }
+  // };
   const handleRegisterUser = async (dataBody) => {
     const { confirmPass, ...others } = dataBody;
+    console.log("Data gửi lên server:", others);
 
     try {
       const data = await authRequestRegister("/auth/register", others);
+      console.log(data);
 
       if (data) {
         toast.success("Đăng ký thành công!");
         setTimeout(() => {
           navigate("/login");
         }, 2000);
-      } else {
-        toast.error("Đăng ký thất bại, vui lòng thử lại!");
-        reset();
       }
     } catch (error) {
-      toast.error("Lỗi hệ thống, vui lòng thử lại sau!");
+      // Lấy message lỗi từ response trả về của server
+      if (error.response && error.response.data) {
+        // Giả sử server trả về { error: "Tài khoản đã được đăng ký" }
+        const errMsg =
+          error.response.data.error ||
+          error.response.data.message ||
+          "Đăng ký thất bại, vui lòng thử lại!";
+
+        toast.error(errMsg);
+      } else {
+        toast.error("Lỗi hệ thống, vui lòng thử lại sau!");
+      }
+
+      reset();
     }
   };
 
