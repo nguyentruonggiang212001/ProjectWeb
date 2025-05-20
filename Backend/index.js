@@ -4,6 +4,9 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import routes from "./routes/index.js";
 import env from "./config/config.env.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 
@@ -19,8 +22,12 @@ app.use((req, res, next) => {
   res.status(404).send("Sorry can't find that!");
 });
 
-console.log("CLIENT_URL:", env.CLIENT_URL);
+const PORT = process.env.PORT || env.PORT;
 
-app.listen(env.PORT, () => {
-  console.log(`Server is running on: http://localhost:${env.PORT}/api`);
+// app.listen(env.PORT, () => {
+//   console.log(`Server is running on: http://localhost:${env.PORT}/api`);
+// });
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
