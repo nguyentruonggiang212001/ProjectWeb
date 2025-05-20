@@ -62,9 +62,9 @@ const AdminAttribute = () => {
 
   return (
     <div className="container">
-      <h2 style={{ textAlign: "center", margin: "80px" }}>
+      <h1 style={{ textAlign: "center", margin: "80px", fontSize: "20px" }}>
         Quản lý Thuộc tính
-      </h2>
+      </h1>
       <button
         style={{
           marginBottom: "30px",
