@@ -7,7 +7,7 @@ import banner from "../img/banner.jpg";
 import logoMobie from "../img/LogoMenuMobile.0bf1ee6a.svg";
 import { AuthContext } from "../contexts/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "./../features/products/productAction";
+import { fetchProducts } from "../features/products/productAction";
 import { setSearchTerm } from "../features/products/productSlice";
 import { fetchCarts } from "../features/products/cartAction";
 import useDebounce from "../hook/useDebounce";
@@ -460,10 +460,16 @@ const Header = () => {
                   <i className="fa-solid fa-caret-down"></i>
                 </label>
                 <div className="dropdown-women">
-                  <Link to="/category/beauty">Làm Đẹp Nữ</Link>
-                  <Link to="/category/womens-dresses">Váy Nữ</Link>
-                  <Link to="/category/womens-shoes">Giày Nữ</Link>
-                  <Link to="/category/womens-watches">Đồng Hồ Nữ</Link>
+                  <Link to="/category/ao-khoac-phao-va-long-vu-nu">
+                    ÁO KHOÁC PHAO & LÔNG VŨ NỮ
+                  </Link>
+                  <Link to="/category/quan-dai-and-jean-nu">
+                    QUẦN DÀI & JEAN NỮ
+                  </Link>
+                  <Link to="/category/giay-the-thao-va-giay-chay-bo-nu">
+                    GIÀY THỂ THAO & GIÀY CHẠY BỘ NỮ
+                  </Link>
+                  <Link to="/category/do-lot-nu">ĐỒ LÓT NỮ</Link>
                 </div>
               </div>
 
@@ -475,10 +481,16 @@ const Header = () => {
                   <i className="fa-solid fa-caret-down"></i>
                 </label>
                 <div className="dropdown-men">
-                  <Link to="/category/Áo Nam">Áo Nam</Link>
-                  <Link to="/category/mens-shoes">Giày Nam</Link>
-                  <Link to="/category/mens-watches">Đồng Hồ Nam</Link>
-                  <Link to="/category/laptops">Laptops Nam</Link>
+                  <Link to="/category/ao-khoac-phao-va-long-vu-nam">
+                    ÁO KHOÁC PHAO & LÔNG VŨ NAM
+                  </Link>
+                  <Link to="/category/quan-dai-va-jean-nam">
+                    QUẦN DÀI & JEAN NAM
+                  </Link>
+                  <Link to="/category/giay-the-thao-va-giay-chay-nam">
+                    GIÀY THỂ THAO & GIÀY CHẠY NAM
+                  </Link>
+                  <Link to="/category/do-lot-nam">ĐỒ LÓT NAM</Link>
                 </div>
               </div>
               <li>

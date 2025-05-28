@@ -481,14 +481,19 @@ header .nav-header img {
     text-decoration: none;
     color: #2c2c2c;
 } 
+
 .container .nav-sub ul li .dropdown {
-    display: none;
+    opacity: 0;
+    visibility: hidden;
     position: absolute;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    transition: opacity 0.3s ease 0.2s, visibility 0s linear 0.5s;
 }
+
 .container .nav-sub ul li:hover .dropdown {
-    display: block;
     opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
 }
 .container .nav-sub ul li .dropdown a {
     display: block ;
@@ -801,6 +806,10 @@ gap: 13px;
     background-color: rgb(201, 32, 39);
     border: none;
 
+}
+.container-category{
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 
@@ -1792,9 +1801,7 @@ tr:nth-child(even) {
 }
 }
 @media screen and (max-width: 991.98px) {
-/* #root {
- position: absolute;
-} */
+
  .container {
  padding: 0 2rem;
 }
@@ -1986,11 +1993,6 @@ tr:nth-child(even) {
     width: 98%;
 }
 
-
-
-
-
-
 .sub{
     position: fixed;
     top: 14px;
@@ -2032,7 +2034,7 @@ tr:nth-child(even) {
 
 @media screen and (max-width: 589.98px) {
  .container {
- padding: 0 2rem;
+ padding: 0 20px;
 }
 .user-email{
     display: none;
@@ -2068,9 +2070,54 @@ tr:nth-child(even) {
 .text-cart-sub span{
     text-align: center;
 }
+.product-card .product-infor h2 {
+    font-size: 14px;
+   
 }
 
+.code-content .voucher-items-list {
+    overflow: visible;
+}
 
+.container .row .cart-content {
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.dropdown-menu{
+    right: -55px;
+}
+
+.footer-last {
+    display: flex;
+    flex-wrap: wrap;
+    
+}
+.footer-last span{
+    font-size: 13px;
+}
+
+.line-home-page:before {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+}
+.container-category{
+    padding: 0 10px;
+}
+
+.form-user {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 350px;
+}
+.form-user p {
+    font-size: 12px;
+}
+
+}
 
 
 

@@ -79,116 +79,118 @@ const HomePage = () => {
             <p>NHẬN CODE ÁP DỤNG ƯU ĐÃI ONLINE</p>
           </div>
           <div className="code-content">
-            <div className="col-lg-12 col-md-12 col-sm-12 col-12">
-              <div className="voucher-items-list">
-                <div className="vocher-item">
-                  <div className="voucher-item-info">
-                    <div className="voucher-item-detail ">
-                      <div className="voucher-item-title">
-                        <span style={{ color: "#ba372a" }}>
-                          GIẢM THÊM 6% TỐI ĐA 60K
-                        </span>
+            <div className="row">
+              <div className="col-lg-12 col-md-12 col-sm-12 col-12">
+                <div className="voucher-items-list">
+                  <div className="vocher-item">
+                    <div className="voucher-item-info">
+                      <div className="voucher-item-detail ">
+                        <div className="voucher-item-title">
+                          <span style={{ color: "#ba372a" }}>
+                            GIẢM THÊM 6% TỐI ĐA 60K
+                          </span>
+                        </div>
+                        <div className="voucher-item-des">
+                          <span style={{ fontSize: "10pt" }}>Nhập mã </span>
+                          <strong>
+                            <span style={{ fontSize: "12pt" }}>TOKYO60</span>
+                          </strong>
+                        </div>
+                        <div className="voucher-item-des">
+                          <span style={{ fontSize: "10pt" }}>
+                            Cho đơn hàng từ 199,000đ
+                          </span>
+                        </div>
+                        <div className="voucher-item-date">
+                          <span className="expire" style={{ fontSize: "10pt" }}>
+                            Hết hạn: 28/02/2025
+                          </span>
+                        </div>
                       </div>
-                      <div className="voucher-item-des">
-                        <span style={{ fontSize: "10pt" }}>Nhập mã </span>
-                        <strong>
-                          <span style={{ fontSize: "12pt" }}>TOKYO60</span>
-                        </strong>
-                      </div>
-                      <div className="voucher-item-des">
-                        <span style={{ fontSize: "10pt" }}>
-                          Cho đơn hàng từ 199,000đ
-                        </span>
-                      </div>
-                      <div className="voucher-item-date">
-                        <span className="expire" style={{ fontSize: "10pt" }}>
-                          Hết hạn: 28/02/2025
-                        </span>
-                      </div>
-                    </div>
-                    <div className="voucher-item-action">
-                      <div className="action">
-                        <span
-                          className="copy-content"
-                          style={{ cursor: "pointer", fontSize: "8pt" }}
-                        >
-                          Sao chép mã
-                        </span>
+                      <div className="voucher-item-action">
+                        <div className="action">
+                          <span
+                            className="copy-content"
+                            style={{ cursor: "pointer", fontSize: "8pt" }}
+                          >
+                            Sao chép mã
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
 
-                <div className="vocher-item">
-                  <div className="voucher-item-info">
-                    <div className="voucher-item-detail ">
-                      <div className="voucher-item-title">
-                        <span style={{ color: "#ba372a" }}>
-                          GIẢM THÊM 8% TỐI ĐA 200K
-                        </span>
+                  <div className="vocher-item">
+                    <div className="voucher-item-info">
+                      <div className="voucher-item-detail ">
+                        <div className="voucher-item-title">
+                          <span style={{ color: "#ba372a" }}>
+                            GIẢM THÊM 8% TỐI ĐA 200K
+                          </span>
+                        </div>
+                        <div className="voucher-item-des">
+                          <span style={{ fontSize: "10pt" }}>Nhập mã </span>
+                          <strong>
+                            <span style={{ fontSize: "12pt" }}>LIFE200</span>
+                          </strong>
+                        </div>
+                        <div className="voucher-item-des">
+                          <span style={{ fontSize: "10pt" }}>
+                            Cho đơn hàng từ 349,000đ
+                          </span>
+                        </div>
+                        <div className="voucher-item-date">
+                          <span className="expire" style={{ fontSize: "10pt" }}>
+                            Hết hạn: 28/02/2025
+                          </span>
+                        </div>
                       </div>
-                      <div className="voucher-item-des">
-                        <span style={{ fontSize: "10pt" }}>Nhập mã </span>
-                        <strong>
-                          <span style={{ fontSize: "12pt" }}>LIFE200</span>
-                        </strong>
-                      </div>
-                      <div className="voucher-item-des">
-                        <span style={{ fontSize: "10pt" }}>
-                          Cho đơn hàng từ 349,000đ
-                        </span>
-                      </div>
-                      <div className="voucher-item-date">
-                        <span className="expire" style={{ fontSize: "10pt" }}>
-                          Hết hạn: 28/02/2025
-                        </span>
-                      </div>
-                    </div>
-                    <div className="voucher-item-action">
-                      <div className="action">
-                        <span
-                          className="copy-content"
-                          style={{ cursor: "pointer", fontSize: "8pt" }}
-                        >
-                          Sao chép mã
-                        </span>
+                      <div className="voucher-item-action">
+                        <div className="action">
+                          <span
+                            className="copy-content"
+                            style={{ cursor: "pointer", fontSize: "8pt" }}
+                          >
+                            Sao chép mã
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="vocher-item">
-                  <div className="voucher-item-info">
-                    <div className="voucher-item-detail ">
-                      <div className="voucher-item-title">
-                        <span style={{ color: "#ba372a" }}>
-                          GIẢM THÊM 100,000đ
-                        </span>
+                  <div className="vocher-item">
+                    <div className="voucher-item-info">
+                      <div className="voucher-item-detail ">
+                        <div className="voucher-item-title">
+                          <span style={{ color: "#ba372a" }}>
+                            GIẢM THÊM 100,000đ
+                          </span>
+                        </div>
+                        <div className="voucher-item-des">
+                          <span style={{ fontSize: "10pt" }}>Nhập mã </span>
+                          <strong>
+                            <span style={{ fontSize: "12pt" }}>CLEAR200</span>
+                          </strong>
+                        </div>
+                        <div className="voucher-item-des">
+                          <span style={{ fontSize: "10pt" }}>
+                            Cho đơn hàng từ 799,000đ
+                          </span>
+                        </div>
+                        <div className="voucher-item-date">
+                          <span className="expire" style={{ fontSize: "10pt" }}>
+                            Hết hạn: 28/02/2025
+                          </span>
+                        </div>
                       </div>
-                      <div className="voucher-item-des">
-                        <span style={{ fontSize: "10pt" }}>Nhập mã </span>
-                        <strong>
-                          <span style={{ fontSize: "12pt" }}>CLEAR200</span>
-                        </strong>
-                      </div>
-                      <div className="voucher-item-des">
-                        <span style={{ fontSize: "10pt" }}>
-                          Cho đơn hàng từ 799,000đ
-                        </span>
-                      </div>
-                      <div className="voucher-item-date">
-                        <span className="expire" style={{ fontSize: "10pt" }}>
-                          Hết hạn: 28/02/2025
-                        </span>
-                      </div>
-                    </div>
-                    <div className="voucher-item-action">
-                      <div className="action">
-                        <span
-                          className="copy-content"
-                          style={{ cursor: "pointer", fontSize: "8pt" }}
-                        >
-                          Sao chép mã
-                        </span>
+                      <div className="voucher-item-action">
+                        <div className="action">
+                          <span
+                            className="copy-content"
+                            style={{ cursor: "pointer", fontSize: "8pt" }}
+                          >
+                            Sao chép mã
+                          </span>
+                        </div>
                       </div>
                     </div>
                   </div>

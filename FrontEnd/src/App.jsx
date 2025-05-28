@@ -1,8 +1,9 @@
 import { Routes, Route } from "react-router-dom";
 import "../src/css/style.css";
 import "../src/css/grid.css";
-import Header from "./Components/Header";
-import Footer from "./Components/Footer";
+
+import MainLayout from "./components/MainLayout";
+
 import HomePage from "./pages/HomePage";
 import ProductDetailPage from "./pages/ProductDetailPage";
 import CartPage from "./pages/CartPage";
@@ -14,18 +15,19 @@ import OrderListPage from "./pages/OrderListPage";
 import DashBoardPage from "./pages/admin/DashBoardPage";
 import ProductTable from "./pages/admin/ProductTable";
 import ProductForm from "./pages/admin/ProductForm";
+import User from "./user/User";
 import LoginForm from "./user/LoginForm";
 import { RegisterForm } from "./user/RegisterForm";
-import User from "./user/User";
-import ScrollToTop from "react-scroll-to-top";
+import ForgotPassword from "./user/ForgotPassword";
+import ResetPassword from "./user/ResetPassword";
 import NotFoundPage from "./pages/NotFoundPage";
 import UserTable from "./pages/admin/UserTable";
 import AdminOrders from "./pages/admin/AdminOrder";
 import AdminCategories from "./pages/admin/AdminCategories";
 import AdminVariants from "./pages/admin/AdminVariants";
 import AdminAttribute from "./pages/admin/AdminAttribute";
-import ForgotPassword from "./user/ForgotPassword";
-import ResetPassword from "./user/ResetPassword";
+
+import ScrollToTop from "react-scroll-to-top";
 
 function App() {
   return (
@@ -33,89 +35,19 @@ function App() {
       <ScrollToTop />
       <Routes>
         {/* Các trang có Header và Footer */}
-        <Route
-          path="/"
-          element={
-            <>
-              <Header />
-              <HomePage />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/category/:slug"
-          element={
-            <>
-              <Header />
-              <CategoryProductList />
-              <Footer />
-            </>
-          }
-        />
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/category/:slug" element={<CategoryProductList />} />
+          <Route path="/products/:id" element={<ProductDetailPage />} />
+          <Route path="/man" element={<ManPage />} />
+          <Route path="/woman" element={<WomanPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/order" element={<OrderPage />} />
+          <Route path="/orders" element={<OrderListPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Route>
 
-        <Route
-          path="/products/:id"
-          element={
-            <>
-              <Header />
-              <ProductDetailPage />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/man"
-          element={
-            <>
-              <Header />
-              <ManPage />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/woman"
-          element={
-            <>
-              <Header />
-              <WomanPage />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/cart"
-          element={
-            <>
-              <Header />
-              <CartPage />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/order"
-          element={
-            <>
-              <Header />
-              <OrderPage />
-              <Footer />
-            </>
-          }
-        />
-        <Route
-          path="/orders"
-          element={
-            <>
-              <Header />
-              <OrderListPage />
-              <Footer />
-            </>
-          }
-        />
-
-        {/* Trang quản trị admin */}
+        {/* Trang quản trị admin không dùng MainLayout */}
         <Route path="/admin" element={<DashBoardPage />}>
           <Route path="products" element={<ProductTable />} />
           <Route path="products/add" element={<ProductForm />} />
@@ -127,25 +59,13 @@ function App() {
           <Route path="attribute" element={<AdminAttribute />} />
         </Route>
 
-        {/* Các trang trong /user KHÔNG có Header và Footer */}
+        {/* Các trang người dùng (không có Header/Footer) */}
         <Route path="/" element={<User />}>
           <Route path="login" element={<LoginForm />} />
           <Route path="register" element={<RegisterForm />} />
           <Route path="forgot-password" element={<ForgotPassword />} />
           <Route path="reset-password" element={<ResetPassword />} />
         </Route>
-
-        {/* Trang 404 */}
-        <Route
-          path="*"
-          element={
-            <>
-              <Header />
-              <NotFoundPage />
-              <Footer />
-            </>
-          }
-        />
       </Routes>
     </>
   );

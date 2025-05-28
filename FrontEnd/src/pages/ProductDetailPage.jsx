@@ -671,7 +671,7 @@ const ProductDetailPage = () => {
           <div className="row">
             {suggestedProducts.length > 0 ? (
               suggestedProducts.slice(0, 4).map((product) => (
-                <div key={product._id} className="col-lg-3 col-sm-6 col-12">
+                <div key={product._id} className="col-lg-3 col-sm-6 col-6">
                   <div className="product-card">
                     <Link to={`/products/${product._id}`}>
                       <img src={product.imageUrl} alt={product.title} />

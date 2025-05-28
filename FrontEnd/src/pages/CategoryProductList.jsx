@@ -34,7 +34,7 @@ const CategoryProductList = ({ slug: propSlug }) => {
     }),
     0
   );
-  console.log("gia cua maxPrice", maxProductPrice);
+  // console.log("gia cua maxPrice", maxProductPrice);
 
   const [priceRange, setPriceRange] = useState([0, maxProductPrice]);
 
@@ -135,7 +135,7 @@ const CategoryProductList = ({ slug: propSlug }) => {
     );
 
   return (
-    <div className="container" style={{ userSelect: "none" }}>
+    <div className="container-category" style={{ userSelect: "none" }}>
       <div className={isCategoryPage ? "category-page" : "homepage"}>
         <div className="category-product-list">
           <div
@@ -232,7 +232,7 @@ const CategoryProductList = ({ slug: propSlug }) => {
 
                 return (
                   <div
-                    className="col-lg-3 col-md-6 col-sm-6 col-12"
+                    className="col-lg-3 col-md-6 col-sm-6 col-6"
                     key={product._id}
                   >
                     <div className="product-card">

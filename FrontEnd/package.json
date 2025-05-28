@@ -36,6 +36,7 @@
     "react-paginate": "^8.2.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.0.2",
+    "react-router-scroll-memory": "^2.0.7",
     "react-scroll-to-top": "^3.0.0",
     "react-toastify": "^11.0.5",
     "uuid": "^11.0.3",
