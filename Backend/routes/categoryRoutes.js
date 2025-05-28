@@ -9,13 +9,15 @@ import {
   updateCategoryById,
 } from "./../controllers/categoryController.js";
 
+import verifyAdmin from "./../middlewares/verifyAdmin.js";
+
 const categoryRouter = Router();
 
 categoryRouter.get("/", getAllCategories);
 categoryRouter.get("/:id", validateIdMongo, getCategoryById);
 categoryRouter.get("/slug/:slug", getCategoryBySlug);
-categoryRouter.post("/", createCategory);
-categoryRouter.patch("/:id", validateIdMongo, updateCategoryById);
-categoryRouter.delete("/:id", validateIdMongo, removeCategory);
+categoryRouter.post("/", verifyAdmin, createCategory);
+categoryRouter.patch("/:id", verifyAdmin, validateIdMongo, updateCategoryById);
+categoryRouter.delete("/:id", verifyAdmin, validateIdMongo, removeCategory);
 
 export default categoryRouter;
