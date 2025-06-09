@@ -177,7 +177,9 @@ export const forgotPassword = async (req, res) => {
     await user.save();
 
     // Tạo link reset mật khẩu
-    const resetLink = `${env.CLIENT_URL}/#/reset-password?token=${token}`;
+    // const resetLink = `${env.CLIENT_URL}/#/reset-password?token=${token}`;
+    const resetLink = `${process.env.CLIENT_URL}/#/reset-password?token=${token}`;
+
     console.log("Reset link:", resetLink); // Debug để kiểm tra link có đúng không
 
     await sendEmail(

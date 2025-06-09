@@ -9,6 +9,8 @@ import dotenv from "dotenv";
 dotenv.config({
   path: `.env.${process.env.NODE_ENV || "development"}`,
 });
+console.log("🌍 ENV FILE:", `.env.${process.env.NODE_ENV || "development"}`);
+console.log("🔗 CLIENT_URL:", process.env.CLIENT_URL);
 
 const app = express();
 
