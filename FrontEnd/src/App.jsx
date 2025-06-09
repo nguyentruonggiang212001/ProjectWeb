@@ -27,12 +27,10 @@ import AdminCategories from "./pages/admin/AdminCategories";
 import AdminVariants from "./pages/admin/AdminVariants";
 import AdminAttribute from "./pages/admin/AdminAttribute";
 
-import ScrollToTop from "react-scroll-to-top";
-
 function App() {
   return (
     <>
-      <ScrollToTop />
+      {/* <ScrollToTop /> */}
       <Routes>
         {/* Các trang có Header và Footer */}
         <Route element={<MainLayout />}>

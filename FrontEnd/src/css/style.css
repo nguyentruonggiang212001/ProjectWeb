@@ -2,6 +2,7 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    scroll-behavior: auto!important;
 }
 
 html,
@@ -505,10 +506,13 @@ header .nav-header img {
     margin: 0px;
     text-align: center;
     z-index: 99999;
+ 
+   
 }
 .container .nav-sub ul li .dropdown a:hover {
     background-color: #d62027;
     color: #fff;
+   
 }
 
 .container .nav-sub .toggle-label {

@@ -9,17 +9,17 @@ import { AuthContext } from "../contexts/AuthContext";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../features/products/productAction";
 import { setSearchTerm } from "../features/products/productSlice";
-import { fetchCarts } from "../features/products/cartAction";
-import useDebounce from "../hook/useDebounce";
 import { fetchProductsBySearch } from "../services/productServices";
 import { getAllCategory } from "../services/categoryServices";
+import { fetchCarts } from "../features/products/cartAction";
+import useDebounce from "../hook/useDebounce";
 
 const Header = () => {
   const dispatch = useDispatch();
   const carts = useSelector((state) => state.carts?.carts || []);
   const { user, logout } = useContext(AuthContext);
-  const loading = useSelector((state) => state.products?.loading || false);
-  const error = useSelector((state) => state.products?.error || null);
+  // const loading = useSelector((state) => state.products?.loading || false);
+  // const error = useSelector((state) => state.products?.error || null);
   const searchTerm = useSelector((state) => state.products?.searchTerm || "");
   const debouncedSearchTerm = useDebounce(searchTerm.trim(), 500);
   const [products, setProducts] = useState([]);
@@ -133,8 +133,8 @@ const Header = () => {
     navigate(`/products/${id}`);
   };
 
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>{error}</p>;
+  // if (loading) return <p>Loading...</p>;
+  // if (error) return <p>{error}</p>;
 
   return (
     <div>

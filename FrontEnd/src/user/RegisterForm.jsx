@@ -2,9 +2,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Link, useNavigate } from "react-router-dom";
 import { registerSchema } from "../schemas/auth";
-import { authRequestRegister } from "../services/auth";
+import { authRequestRegister, checkEmailExists } from "../services/auth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { setErrorMap } from "zod";
 
 export const RegisterForm = () => {
   const navigate = useNavigate();
@@ -15,34 +16,17 @@ export const RegisterForm = () => {
     reset,
   } = useForm({ resolver: zodResolver(registerSchema) });
 
-  // const handleRegisterUser = async (dataBody) => {
-  //   const { confirmPass, ...others } = dataBody;
-  //   console.log("Data gửi lên server:", others);
-
-  //   try {
-  //     const data = await authRequestRegister("/auth/register", others);
-  //     console.log(data);
-
-  //     if (data) {
-  //       toast.success("Đăng ký thành công!");
-  //       setTimeout(() => {
-  //         navigate("/login");
-  //       }, 2000);
-  //     } else {
-  //       toast.error("Đăng ký thất bại, vui lòng thử lại!");
-  //       reset();
-  //     }
-  //   } catch (error) {
-  //     toast.error("Lỗi hệ thống, vui lòng thử lại sau!");
-  //   }
-  // };
   const handleRegisterUser = async (dataBody) => {
     const { confirmPass, ...others } = dataBody;
-    console.log("Data gửi lên server:", others);
+
+    const isEmailExists = await checkEmailExists(others.email);
+    if (isEmailExists) {
+      toast.error("Email đã tồn tại!");
+      return;
+    }
 
     try {
       const data = await authRequestRegister("/auth/register", others);
-      console.log(data);
 
       if (data) {
         toast.success("Đăng ký thành công!");
@@ -80,7 +64,6 @@ export const RegisterForm = () => {
           {...register("email")}
         />
         {errors.email && <p style={{ color: "red" }}>{errors.email.message}</p>}
-
         <label htmlFor="username">Tên người dùng</label>
         <input
           type="text"
@@ -91,7 +74,6 @@ export const RegisterForm = () => {
         {errors.username && (
           <p style={{ color: "red" }}>{errors.username.message}</p>
         )}
-
         <label htmlFor="Password">Mật Khẩu</label>
         <input
           type="password"
@@ -102,7 +84,6 @@ export const RegisterForm = () => {
         {errors.password && (
           <p style={{ color: "red" }}>{errors.password.message}</p>
         )}
-
         <label htmlFor="confirmPass">Xác Nhận Mật Khẩu</label>
         <input
           type="password"
@@ -113,7 +94,6 @@ export const RegisterForm = () => {
         {errors.confirmPass && (
           <p style={{ color: "red" }}>{errors.confirmPass.message}</p>
         )}
-
         <label htmlFor="phone">Số điện thoại</label>
         <input
           type="text"
@@ -122,7 +102,6 @@ export const RegisterForm = () => {
           {...register("phone")}
         />
         {errors.phone && <p style={{ color: "red" }}>{errors.phone.message}</p>}
-
         <Link to="/user/login">
           <p style={{ color: "blue", textAlign: "left", marginBottom: "15px" }}>
             Bạn đã có tài khoản rồi à?

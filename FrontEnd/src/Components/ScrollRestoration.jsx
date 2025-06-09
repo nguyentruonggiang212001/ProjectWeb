@@ -1,38 +1,46 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
-// Lưu vị trí scroll vào object này (key là pathname)
 const scrollPositions = {};
+window.scrollPositions = {};
 
 export default function ScrollRestoration() {
   const location = useLocation();
 
-  // 1. Lưu vị trí scroll khi rời trang
   useEffect(() => {
-    // lưu vị trí scroll hiện tại vào `scrollPositions`
-    return () => {
+    if ("scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
       scrollPositions[location.pathname] = window.scrollY;
-      console.log(" Đã lưu scroll:", location.pathname, window.scrollY);
+      window.scrollPositions[location.pathname] = window.scrollY;
     };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [location.pathname]);
 
-  // 2. Khôi phục scroll khi vào trang
   useEffect(() => {
-    // Đợi 100ms để trang kịp render nội dung
-    const timer = setTimeout(() => {
-      const savedY = scrollPositions[location.pathname];
+    const savedY = scrollPositions[location.pathname];
 
+    const timeout = setTimeout(() => {
       if (savedY !== undefined) {
-        window.scrollTo(0, savedY);
-        console.log(" Khôi phục scroll:", savedY);
+        window.scrollTo({
+          left: 0,
+          top: savedY,
+          behavior: "auto",
+        });
       } else {
-        window.scrollTo(0, 0); // Mặc định về đầu trang
-        console.log(" Về đầu trang (chưa lưu vị trí)");
+        window.scrollTo({
+          left: 0,
+          top: 0,
+          behavior: "auto",
+        });
       }
-    }, 100);
-
-    return () => clearTimeout(timer); // Hủy timer nếu unmount
+    }, 200);
   }, [location.pathname]);
 
-  return null; // Component không render gì cả
+  return null;
 }

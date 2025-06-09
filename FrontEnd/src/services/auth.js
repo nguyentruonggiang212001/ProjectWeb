@@ -13,6 +13,19 @@ export const authRequestRegister = async (path, databody) => {
   }
 };
 
+// Hàm kiểm tra email đã tồn tại
+export const checkEmailExists = async (email) => {
+  const res = await instance.get(
+    `/auth/check-email?email=${encodeURIComponent(email)}`,
+    {
+      headers: {
+        Authorization: "", // bỏ token cho request này
+      },
+    }
+  );
+  return res.data.exists;
+};
+
 export const authRequestLogin = async (path, databody) => {
   try {
     const { data } = await instance.post(`${path}`, databody);
