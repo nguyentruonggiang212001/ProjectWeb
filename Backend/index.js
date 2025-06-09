@@ -6,7 +6,9 @@ import routes from "./routes/index.js";
 import env from "./config/config.env.js";
 import dotenv from "dotenv";
 
-dotenv.config();
+dotenv.config({
+  path: `.env.${process.env.NODE_ENV || "development"}`,
+});
 
 const app = express();
 
