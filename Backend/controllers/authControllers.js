@@ -13,6 +13,8 @@ const generateToken = (user) => {
 
 export const registerUser = async (req, res) => {
   try {
+    console.log("Data nhận từ client:", req.body);
+
     const { email, password, username, phone, role } = req.body;
 
     const existingUser = await User.findOne({ email });
@@ -40,6 +42,24 @@ export const registerUser = async (req, res) => {
       .json({ message: "Đăng ký thành công, hãy xác thực email", newUser });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+};
+
+export const checkEmailExist = async (req, res) => {
+  try {
+    const { email } = req.query;
+    if (!email) {
+      return res.status(400).json({ error: "Thiếu email" });
+    }
+
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(200).json({ exists: true });
+    } else {
+      return res.status(200).json({ exists: false });
+    }
+  } catch (error) {
+    res.status(500).json({ error: "Lỗi server khi kiểm tra email" });
   }
 };
 
@@ -157,7 +177,7 @@ export const forgotPassword = async (req, res) => {
     await user.save();
 
     // Tạo link reset mật khẩu
-    const resetLink = `${env.CLIENT_URL}/reset-password?token=${token}`;
+    const resetLink = `${env.CLIENT_URL}/#/reset-password?token=${token}`;
     console.log("Reset link:", resetLink); // Debug để kiểm tra link có đúng không
 
     await sendEmail(

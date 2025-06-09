@@ -2,6 +2,7 @@ import { Router } from "express";
 import verifyUser from "../middlewares/verifyUser.js";
 import verifyAdmin from "../middlewares/verifyAdmin.js";
 import {
+  checkEmailExist,
   deleteUser,
   forgotPassword,
   getAllUsers,
@@ -20,5 +21,6 @@ authRoutes.put("/profile/:id", verifyUser, updateUser);
 authRoutes.post("/forgot-password", forgotPassword);
 authRoutes.post("/reset-password", resetPassword);
 authRoutes.delete("/:id", verifyUser, verifyAdmin, deleteUser);
+authRoutes.get("/check-email", checkEmailExist);
 
 export default authRoutes;
