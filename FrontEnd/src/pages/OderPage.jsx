@@ -127,16 +127,28 @@ const OrderPage = () => {
 
     // Tiến hành thanh toán
     try {
-      const response = await fetch("http://localhost:5000/payment", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          userId,
-          amount: totalPrice,
-        }),
-      });
+      // const response = await fetch("http://localhost:5000/payment", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     userId,
+      //     amount: totalPrice,
+      //   }),
+      const response = await fetch(
+        `${import.meta.env.VITE_ZALOPAY_API}/payment`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId,
+            amount: totalPrice,
+          }),
+        }
+      );
 
       const responseData = await response.json();
       console.log("Phản hồi từ backend:", responseData);

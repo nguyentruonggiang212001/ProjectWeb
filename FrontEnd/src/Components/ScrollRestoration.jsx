@@ -39,7 +39,7 @@ export default function ScrollRestoration() {
           behavior: "auto",
         });
       }
-    }, 500);
+    }, 400);
   }, [location.pathname]);
 
   return null;
