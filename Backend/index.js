@@ -5,6 +5,7 @@ import connectDB from "./config/db.js";
 import routes from "./routes/index.js";
 import env from "./config/config.env.js";
 import dotenv from "dotenv";
+import zaloPayRoutes from "./ZaloPay/zalopay.route.js";
 
 dotenv.config({
   path: `.env.${process.env.NODE_ENV || "development"}`,
@@ -21,6 +22,8 @@ connectDB();
 app.use(cors({}));
 
 app.use("/api", routes);
+
+app.use("/api/zalopay", zaloPayRoutes);
 
 app.use((req, res, next) => {
   res.status(404).send("Sorry can't find that!");
