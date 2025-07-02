@@ -7,7 +7,7 @@ async function verifyAdmin(req, res, next) {
     if (!token) {
       return res
         .status(401)
-        .json({ error: "Không có token, vui lòng đăng nhập!" });
+        .json({ error: "Không có token, vui lòng đăng nhập lại!" });
     }
 
     //  Giải mã token
