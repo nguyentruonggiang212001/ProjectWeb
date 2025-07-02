@@ -29,13 +29,13 @@ app.post("/payment", async (req, res) => {
     return res.status(400).json({ message: "Thiếu thông tin đơn hàng!" });
   }
 
-  // const embed_data = {
-  //   redirecturl: "http://localhost:5173/order",
-  // };
-
   const embed_data = {
-    redirecturl: `${process.env.CLIENT_URL}/order`,
+    redirecturl: "http://localhost:5173/#/order",
   };
+
+  // const embed_data = {
+  //   redirecturl: `${process.env.CLIENT_URL}/order`,
+  // };
 
   // const items = [{}];
   const items = []; // Sửa thành mảng rỗng

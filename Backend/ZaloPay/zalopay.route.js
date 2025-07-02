@@ -22,8 +22,12 @@ router.post("/payment", async (req, res) => {
     return res.status(400).json({ message: "Thiếu thông tin đơn hàng!" });
   }
 
+  // const embed_data = {
+  //   redirecturl: `${process.env.CLIENT_URL}/order`,
+  // };
+
   const embed_data = {
-    redirecturl: `${process.env.CLIENT_URL}/order`,
+    redirecturl: "https://nguyentruonggiang212001.github.io/ProjectWeb/#/order",
   };
 
   const items = [];
