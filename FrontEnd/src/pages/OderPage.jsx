@@ -151,14 +151,14 @@ const OrderPage = () => {
       );
 
       const responseData = await response.json();
-      console.log("Phản hồi từ backend:", responseData);
+      console.log("Phản hồi từ backend là:", responseData);
 
       if (responseData.order_url) {
         // Lưu thông tin người dùng vào localStorage
         localStorage.setItem("userInfo", JSON.stringify(data));
         window.location.href = responseData.order_url; // Điều hướng đến trang thanh toán
       } else {
-        toast.error("Có lỗi xảy ra khi tạo đơn thanh toán!");
+        toast.error("Có lỗi xảy ra khi tạo đơn thanh toán ");
       }
     } catch (error) {
       console.error("Lỗi thanh toán:", error);
