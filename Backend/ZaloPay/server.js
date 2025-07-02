@@ -4,6 +4,7 @@ import CryptoJS from "crypto-js";
 import moment from "moment";
 import qs from "qs";
 import cors from "cors";
+import dotenv from "dotenv";
 
 const app = express();
 
@@ -28,8 +29,12 @@ app.post("/payment", async (req, res) => {
     return res.status(400).json({ message: "Thiếu thông tin đơn hàng!" });
   }
 
+  // const embed_data = {
+  //   redirecturl: "http://localhost:5173/order",
+  // };
+
   const embed_data = {
-    redirecturl: "http://localhost:5173/order",
+    redirecturl: `${process.env.CLIENT_URL}/order`,
   };
 
   // const items = [{}];
@@ -45,8 +50,9 @@ app.post("/payment", async (req, res) => {
     amount: amount,
     description: `Lazada - Payment for the order #${transID}`,
     bank_code: "",
-    callback_url:
-      "https://f132-2405-4803-fe4b-fdf0-f533-5bda-e9ae-ef32.ngrok-free.app/callback",
+    // callback_url:
+    //   "https://f132-2405-4803-fe4b-fdf0-f533-5bda-e9ae-ef32.ngrok-free.app/callback",
+    callback_url: `${process.env.API_URL}/callback`,
   };
 
   console.log(" Order gửi lên ZaloPay:", order);
@@ -151,4 +157,8 @@ app.post("/order-status/:app_trans_id", async (req, res) => {
 
 app.listen(5000, () => {
   console.log("server run at port 5000");
+});
+
+dotenv.config({
+  path: `.env.${process.env.NODE_ENV || "development"}`,
 });
