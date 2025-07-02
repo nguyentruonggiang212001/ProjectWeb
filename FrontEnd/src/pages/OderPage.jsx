@@ -121,7 +121,7 @@ const OrderPage = () => {
     console.log(data);
 
     if (!userId || totalPrice <= 0) {
-      toast.error("Vui lòng đăng nhập và thêm sản phẩm vào giỏ hàng!");
+      toast.error("Vui lòng đăng nhập và thêm sản phẩm vào giỏ hàng nhé!");
       return;
     }
 
